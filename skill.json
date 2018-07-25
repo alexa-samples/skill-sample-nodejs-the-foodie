@@ -1,0 +1,36 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "The Foodie helps hungry and indecisive people find new restaurants and meal options through conversation.",
+          "examplePhrases": [
+            "Alexa open the foodie",
+            "Alexa tell the foodie I'm hungry",
+            "Alexa ask the foodie for lunch"
+          ],
+          "name": "the foodie",
+          "description": "The Foodie provides hungry, indecisive people with meal options that fit their current desires while taking into account their dietary needs, location, and the time of day. When the user invokes the skill for the first time it asks a series of questions, one at a time, designed to help the user determine what it is they should eat. As it does so, The Foodie remembers the answers to certain questions (like what allergies the user has) so that the next time it runs, it can avoid asking them again. Over time, the skill learns about the user's preferences and habits, making it more accurate in its recipe and restaurant recommendations."
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "EDUCATION_AND_REFERENCE",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom"
+        },
+        "interfaces": []
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [
+      {
+        "name": "alexa::devices:all:address:full:read"
+      }
+    ]
+  }
+}
