@@ -93,7 +93,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 
 ## Supporting other English Regions
 
-1. $ cd ```./models/
+1. $ cd   ```./models/
       Make new region model
 
      In ASK-cli
