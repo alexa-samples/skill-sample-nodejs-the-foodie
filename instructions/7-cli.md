@@ -128,4 +128,16 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 
      $ ask deploy --force
 
+## Certification of other Languages and regions
 
+1.   For other regions like Germany, India,Japan you must replace all the English utterances with local language. 
+
+     In Lamdba index.js create one Lambda Function for each Language. 
+
+     Set the defaults in the files ~/.aws/config, in skills.js, in en-DE.js to the local language.
+
+2.   You will find it easier to make seperate directories and convert the files and make a skill for each local language.
+
+3.   Beware that in there is only one allocated server per region, US, Europe, Asia capable of supporting Lambda.
+
+ 
