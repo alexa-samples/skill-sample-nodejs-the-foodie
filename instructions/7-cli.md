@@ -97,10 +97,14 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
       Make new region model
 
      In ASK-cli
+
+
      $ cp en-US.Jason  en-GB.json 
 
 2.   In ASK-cli force an update of above changes
+
      $ cd ..
+
      $ ask deploy --force
 
 
