@@ -58,7 +58,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 2. Simulate verbal interaction with your skill through the command line (this might take a few moments) using the following example:
 
 	```bash
-	 $ ask simulate -l en-GB -t "start the foodie"
+	 $ ask simulate -l en-US -t "tell the foodie i am on the vegan diet"
 
 	 ✓ Simulation created for simulation id: 4a7a9ed8-94b2-40c0-b3bd-fb63d9887fa7
 	◡ Waiting for simulation response{
@@ -66,10 +66,10 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 	  ...
 	 ```
 
-3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Mobile App and say :
+3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Echo and say :
 
 	```text
-	Alexa, start the foodie
+	Alexa, tell the foodie "i am on the vegan diet"
 	```
 ## Customization
 
@@ -90,3 +90,17 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 	Change the model definition to replace the invocation name and the sample phrase for each intent.  Repeat the operation for each locale you are planning to support.
 
 4. Remember to re-deploy your skill and lambda function for your changes to take effect.
+
+## Supporting other English Regions
+
+1. $ cd ```./models/
+      Make new region model
+
+     In ASK-cli
+     $ cp en-US.Jason  en-GB.json 
+
+2.   In ASK-cli force an update of above changes
+     $ cd ..
+     $ ask deploy --force
+
+
