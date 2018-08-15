@@ -106,7 +106,7 @@ const SuggestMealRecommendationIntentHandler = {
       && !intentSlotsNeedDisambiguation(handlerInput.requestEnvelope.request.intent, slots);
   },
   handle(handlerInput) {
-    console.log('SuggestMealRecommendationIntent:', handlerInput.requestEnvelope.request)
+    console.log('SuggestMealRecommendationIntent:', handlerInput.requestEnvelope.request);
 
     const attributesManager = handlerInput.attributesManager;
     const sessionAttributes = attributesManager.getSessionAttributes();
@@ -147,7 +147,7 @@ const promptForDeliveryOption = {
       .getResponse();
 
   }
-}
+};
 
 const CRecommendationIntentHandler = {
   canHandle(handlerInput) {
@@ -190,7 +190,7 @@ const CRecommendationIntentHandler = {
         }
       } else {
         // TODO prompt for portion
-        speechText = "Which would you like a small, medium, or large portion size?"
+        speechText = "Which would you like a small, medium, or large portion size?";
       }
     } else {
         // TODO: validate input for options - if we don't know ER_SUCCESS_NO_MATCH ask again
@@ -282,7 +282,7 @@ const InProgressHasCityStateCaptureAddressIntentHandler = {
     let speechText = "There's 2 restaurants close to " + slotValues.city.synonym
       + ", " 
       + slotValues.state.synonym
-      + "korean bamboo and One pot. Which would you like?"
+      + "korean bamboo and One pot. Which would you like?";
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
@@ -472,7 +472,7 @@ const RecommendationIntentCaptureSlotToProfileInterceptor = {
   process(handlerInput) {
     const intentName = "RecommendationIntent";
     const slots = [ "allergies", "diet"];
-    console.log('recommendationIntentCaptureSlotToProfileInterceptor')
+    console.log('recommendationIntentCaptureSlotToProfileInterceptor');
     saveNewlyFilledSlotsToSessionAttributes(handlerInput, intentName, slots, (sessionAttributes, slotName, newlyFilledSlot) => {
       sessionAttributes.profile[slotName] = newlyFilledSlot.synonym;
     });
@@ -486,7 +486,7 @@ const CaptureAddressIntentCaptureSlotsToProfileInterceptor = {
   process(handlerInput) {
     const intentName = "CaptureAddressIntent";
     const slots = ["zip", "city", "state"];
-    console.log('CaptureAddressIntentCaptureSlotsToProfileInterceptor')
+    console.log('CaptureAddressIntentCaptureSlotsToProfileInterceptor call saveNewlyFilledSlotsToSessionAttributes');
     saveNewlyFilledSlotsToSessionAttributes(handlerInput, intentName, slots, (sessionAttributes, slotName, newlyFilledSlot) => {
       sessionAttributes.profile.location.address[slotName] = newlyFilledSlot.synonym;
     });
@@ -507,7 +507,9 @@ function saveNewlyFilledSlotsToSessionAttributes(handlerInput, intentName, slots
     && currentIntent.name === intentName) {
     
     const previousIntent = sessionAttributes[currentIntent.name];
+    console.log('CALL intentHasNewlyFilledSlots IN saveNewlyFilledSlotsToSessionAttributes ');
     const newlyFilledSlots = intentHasNewlyFilledSlots(previousIntent, currentIntent, slots);
+    console.log('saveNewlyFilledSlotsToSessionAttributes');
 
     // We only save if the slot(s) has been filled with something new.
     if (newlyFilledSlots.found) {
@@ -645,7 +647,7 @@ function getWelcomeMessage(sessionAttributes) {
   if (sessionAttributes.isNew) {
     speechText += "<say-as interpret-as=\"interjection\">Howdy!</say-as> ";
     speechText += "Welcome to The Foodie! ";
-    speechText += "Iâ€™ll help you decide what to eat right now. ";
+    speechText += "I’ll help you decide what to eat right now. ";
     speechText += "Let's get started. ";
     speechText += "If you'd like me to recommend meals without asking what time ";
     speechText += "it is, please give me permission to lookup your time zone ";
@@ -888,7 +890,7 @@ function getCurrentTime(location) {
       offset = parseInt(offset) + 1;
   }
   
-  tz_offset = offset * 60 * 60 * 1000;
+  const tz_offset = offset * 60 * 60 * 1000;
   const currentTime = new Date(new Date().getTime() + tz_offset);
   
   return currentTime;
@@ -919,7 +921,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestWithConsentTokenHandler,
     LaunchRequestHandler,
-    SuggestMealRecommendationIntentHandler,
+    //SuggestMealRecommendationIntentHandler,
     // promptForDeliveryOption,
     SIPRecommendationIntentHandler,    
     CRecommendationIntentHandler,
@@ -939,8 +941,13 @@ exports.handler = skillBuilder
     RecommendationIntentCaptureSlotToProfileInterceptor,
     CaptureAddressIntentCaptureSlotsToProfileInterceptor,
     DialogManagementStateInterceptor
+   
+  
+
   )
   .addResponseInterceptors(SessionWillEndInterceptor)
-  .addErrorHandlers(ErrorHandler)
-  .withTableName("theFoodie")
+  //.addErrorHandlers(ErrorHandler)
+  .withDynamoDbClient()
+    .withAutoCreateTable(true)
+   .withTableName("theFoodie")
   .lambda();
