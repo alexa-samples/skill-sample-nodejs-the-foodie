@@ -13,6 +13,9 @@ This readme assumes you have your developer environment ready to go and that you
 * Register for an [Amazon Developer Account](https://developer.amazon.com?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=the-foodie-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_the-foodie-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs)
 * Install and Setup [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=the-foodie-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_the-foodie-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs)
 
+* Download and Install [Git Hub Desktop](https://desktop.github.com/) to assist using Windows. The Git Hub Bash shell is installed. On Windows 10 run from Start menu. 
+
+
 ### Installation
 1. **Make sure** you are running the latest version of the CLI
 
@@ -50,6 +53,16 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 	```bash
 	$ ask deploy
 	```
+
+3. Once deployed, additional permissions need to be added to the AWS IAM role being used by the skill since it is persisting data in Amazon DynamoDB.  Navigate to the [AWS IAM console](https://console.aws.amazon.com/iam/home#/roles).
+
+	> _Note: We are adding the full access policy here for convenience.  For a production skill, you should use a more targeted policy restricting access to just the required resources.  Refer to the [DynamoDB documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/access-control-overview.html) for more details._
+
+	1. Locate the role for your skill (by default, it is named ```ask-lambda-<your skill name>```). For example 'ask-lambda-the-foodie'. In browser reduce screen size to 75% to see all the AWS IAM role names.
+
+	1. Click on the role, then click **Attach Policy**.
+	1. Search for **AmazonDynamoDBFullAccess** and click the check box next to it.
+	1. Click **Attach Policy**.
 
 ### Testing
 
