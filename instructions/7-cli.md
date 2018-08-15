@@ -79,11 +79,25 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 	  ...
 	 ```
 
-3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Echo and say :
+3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Echo and say : Alexa <pause> tell the foodie "i am on the vegan diet"
 
-	```text
-	Alexa, tell the foodie "i am on the vegan diet"
-	```
+
+	In the Test area next microphone type
+
+	**tell the foodie "i am on the vegan diet"**
+
+     The reply will be "What time of day is it?"
+
+     Type *12:00* in the Test box
+
+	The reply is "Lunch, I love lunch I know quite a few great options...." 
+
+	Now reply to the questions, with your answers. To interupt say **stop**
+
+4. Eventaully you can change the responses the utterances. Remember to re-deploy when you make a major change with ASK-cli
+ 
+
+	
 ## Customization
 
 1. ```./skill.json```
@@ -102,14 +116,16 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 
 	Change the model definition to replace the invocation name and the sample phrase for each intent.  Repeat the operation for each locale you are planning to support.
 
+$ cp en-US.json  en-GB.json
+
 4. Remember to re-deploy your skill and lambda function for your changes to take effect.
 
      In ASK-cli
 
 
-     $ cp en-US.json  en-GB.json
+     
  
-     $ ask deploy --force
+     $ ask deploy --force     ** re-deploy needs the --force switch
 
 ## Supporting other English Regions
 
