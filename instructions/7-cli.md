@@ -95,7 +95,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 
 
      $ cp en-US.json  en-GB.json 
-
+     $ ask deploy --force
 
 ## Supporting other English Regions
 
