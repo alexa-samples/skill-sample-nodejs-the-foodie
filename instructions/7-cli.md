@@ -91,17 +91,24 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 
 4. Remember to re-deploy your skill and lambda function for your changes to take effect.
 
-## Supporting other English Regions
-
-1. $ cd   ```./models/'''
-      Make new region model
-
      In ASK-cli
 
 
      $ cp en-US.json  en-GB.json 
 
-2.   In ASK-cli force an update of above changes
+
+## Supporting other English Regions
+
+1. 
+      Make new region model
+
+     In ASK-cli
+
+2. ```./models/*.json```
+
+     $ cp en-US.json  en-GB.json 
+
+3.   In ASK-cli force an update of above changes to Alexa development console
 
      $ cd ..
 
