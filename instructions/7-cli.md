@@ -99,7 +99,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
      In ASK-cli
 
 
-     $ cp en-US.Jason  en-GB.json 
+     $ cp en-US.json  en-GB.json 
 
 2.   In ASK-cli force an update of above changes
 
