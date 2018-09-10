@@ -282,7 +282,7 @@ const InProgressHasCityStateCaptureAddressIntentHandler = {
     let speechText = "There's 2 restaurants close to " + slotValues.city.synonym
       + ", " 
       + slotValues.state.synonym
-      + "korean bamboo and One pot. Which would you like?";
+      + " Korean Bamboo and One pot. Which would you like?";
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
@@ -647,7 +647,7 @@ function getWelcomeMessage(sessionAttributes) {
   if (sessionAttributes.isNew) {
     speechText += "<say-as interpret-as=\"interjection\">Howdy!</say-as> ";
     speechText += "Welcome to The Foodie! ";
-    speechText += "I’ll help you decide what to eat right now. ";
+    speechText += "Iï¿½ll help you decide what to eat right now. ";
     speechText += "Let's get started. ";
     speechText += "If you'd like me to recommend meals without asking what time ";
     speechText += "it is, please give me permission to lookup your time zone ";
@@ -921,7 +921,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestWithConsentTokenHandler,
     LaunchRequestHandler,
-    //SuggestMealRecommendationIntentHandler,
+    SuggestMealRecommendationIntentHandler,
     // promptForDeliveryOption,
     SIPRecommendationIntentHandler,    
     CRecommendationIntentHandler,
