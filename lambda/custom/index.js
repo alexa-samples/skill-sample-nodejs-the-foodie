@@ -3,8 +3,12 @@
 
 const Alexa = require('ask-sdk');
 const Moment = require('moment-timezone');
-const TimeZoneRecord = require('./timezone-record');
 
+// Update 2018/9/10 - If you see any module errors such as:
+// 
+// serviceClientFactory.getUpsServiceClient is not a function
+// 
+// try deleting the modules in your node_modules folder and run `npm install` again.
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -382,14 +386,44 @@ const NewSessionRequestInterceptor = {
   }
 };
 
+const SetTimeOfDayInterceptor = {
+  async process(handlerInput) {
+
+    const { requestEnvelope, serviceClientFactory, attributesManager } = handlerInput;
+    const sessionAttributes = attributesManager.getSessionAttributes();
+
+    // look up the time of day if we don't know it already.
+    if (!sessionAttributes.timeOfDay) {
+      const deviceId = requestEnvelope.context.System.device.deviceId;
+
+      const upsServiceClient = serviceClientFactory.getUpsServiceClient();
+      const timezone = await upsServiceClient.getSystemTimeZone(deviceId);    
+
+      const currentTime = getCurrentTime(timezone);
+      const timeOfDay = getTimeOfDay(currentTime);
+
+      sessionAttributes.timeOfDay = timeOfDay;
+      sessionAttributes.profile.location.timezone = timezone;
+      attributesManager.setSessionAttributes(sessionAttributes);
+      
+      console.log("SetTimeOfDayInterceptor - currentTime:", currentTime);
+      console.log("SetTimeOfDayInterceptor - timezone:", timezone);
+      console.log('SetTimeOfDayInterceptor - time of day:', timeOfDay);
+      console.log('SetTimeOfDayInterceptor - sessionAttributes', JSON.stringify(sessionAttributes));
+    }
+  }
+};
+
 const HasConsentTokenRequestInterceptor = {
   async process(handlerInput) {
     const { requestEnvelope, serviceClientFactory, attributesManager } = handlerInput;
     const sessionAttributes = attributesManager.getSessionAttributes();
 
-    if (!sessionAttributes.timeOfDay 
-        && handlerInput.requestEnvelope.context.System.user.permissions
-        && handlerInput.requestEnvelope.context.System.user.permissions.consentToken) {
+    if (handlerInput.requestEnvelope.context.System.user.permissions
+        && handlerInput.requestEnvelope.context.System.user.permissions.consentToken
+        && (!sessionAttributes.profile.location.address.city
+        || !sessionAttributes.profile.location.address.state
+        || !sessionAttributes.profile.location.address.zip)) {
 
       const { deviceId } = requestEnvelope.context.System.device;
       const deviceAddressServiceClient = serviceClientFactory.getDeviceAddressServiceClient();
@@ -397,42 +431,15 @@ const HasConsentTokenRequestInterceptor = {
         
       console.log(JSON.stringify(address));
   
-      let currentTime;
-      let localeInfo;
       if (address.postalCode) {
-
-        localeInfo = await tzr.getByZip(address.postalCode);
-        currentTime = getCurrentTime(localeInfo.location);
-
         sessionAttributes.profile.location.address.zip = address.postalCode;
-
-        console.log('by zip', JSON.stringify(localeInfo));
-        console.log('current time: zip: ', currentTime);
       } else if (address.city && address.stateOrRegion) {
-
-        const city = address.city.toLowerCase();
-        const state = address.stateOrRegion.toLowerCase();
-
-        localeInfo = await tzr.getByCityState(city, state);
-        currentTime = getCurrentTime(localeInfo.location);
-
         sessionAttributes.profile.location.address.city = address.city;
         sessionAttributes.profile.location.address.state = address.stateOrRegion;
-        
-        console.log('by city, state:', JSON.stringify(localeInfo));
-        console.log('current time: city state: ', currentTime);
       }
 
-      if(localeInfo) {
-        sessionAttributes.profile.location.timezone = localeInfo.location.timezone;
-
-        const timeOfDay = getTimeOfDay(currentTime);
-        sessionAttributes.timeOfDay = timeOfDay;
-    
-        console.log('time of day:', timeOfDay);
-        console.log('hasConsentTokenRequestInterceptor - sessionAttributes', JSON.stringify(sessionAttributes));
-        attributesManager.setSessionAttributes(sessionAttributes);
-      }
+      attributesManager.setSessionAttributes(sessionAttributes);
+      console.log('HasConsentTokenRequestInterceptor - sessionAttributes', JSON.stringify(sessionAttributes)); 
     }
   }
 };
@@ -454,6 +461,7 @@ const RecommendationIntentStartedRequestInterceptor = {
         // handle function
         const updatedIntent = handlerInput.requestEnvelope.request.intent;
 
+        updatedIntent.slots.name.value = profile.name || undefined;
         updatedIntent.slots.diet.value = profile.diet || undefined;
         updatedIntent.slots.allergies.value = profile.allergies || undefined;
 
@@ -607,12 +615,11 @@ const requiredSlots = {
   timeOfDay: true
 };
 
-const tzr = new TimeZoneRecord();
-
 /* HELPER FUNCTIONS */
 
 function initializeProfile() {
   return {
+    name: "",
     allergies: "",
     diet: "",
     location: {
@@ -647,12 +654,9 @@ function getWelcomeMessage(sessionAttributes) {
   if (sessionAttributes.isNew) {
     speechText += "<say-as interpret-as=\"interjection\">Howdy!</say-as> ";
     speechText += "Welcome to The Foodie! ";
-    speechText += "I�ll help you decide what to eat right now. ";
-    speechText += "Let's get started. ";
-    speechText += "If you'd like me to recommend meals without asking what time ";
-    speechText += "it is, please give me permission to lookup your time zone ";
-    speechText += "with the companion app. ";
-    speechText += "You'll only need to do this once. ";
+    speechText += "I'll help you find the right food right now. ";
+    speechText += "To make that easier, you can give me permission to access your location, ";
+    speechText += "just check the Alexa app. ";
   } else {
     speechText += "Welcome back!! ";
 
@@ -711,7 +715,7 @@ const timeOfDayMessages = {
 // gets the prompt based upon the context of the skill.
 function getPrompt(sessionAttributes) {
 
-  let speechText =  "For now, what time of day is it?";
+  let speechText =  "How rude of me. I forgot to ask. What's your name?";
   if (!sessionAttributes.isNew) {
     speechText = "Let's narrow it down. What flavors do you feel like? You can say things like spicy, savory, greasy, and fresh.";
   }
@@ -883,22 +887,14 @@ function intentSlotsNeedDisambiguation(intent, slots) {
 }
 
 function getCurrentTime(location) {
-  const isDSTInNewYork = Moment.utc().tz("America/New_York").isDST();
 
-  let offset = location.timezone;
-  if (isDSTInNewYork && location.dst) {
-      offset = parseInt(offset) + 1;
-  }
-  
-  const tz_offset = offset * 60 * 60 * 1000;
-  const currentTime = new Date(new Date().getTime() + tz_offset);
-  
+  const currentTime = Moment.utc().tz(location);
   return currentTime;
 }
 
 function getTimeOfDay(currentTime) {
-  const currentHour = currentTime.getHours();
-  const currentMinutes = currentTime.getMinutes();
+  const currentHour = currentTime.hours();
+  const currentMinutes = currentTime.minutes();
   
   const weightedHour = (currentMinutes >= 45) ? currentHour + 1 : currentHour;
   
@@ -936,18 +932,17 @@ exports.handler = skillBuilder
   )
   .addRequestInterceptors(
     NewSessionRequestInterceptor,
+    SetTimeOfDayInterceptor,
     HasConsentTokenRequestInterceptor,
     RecommendationIntentStartedRequestInterceptor,
     RecommendationIntentCaptureSlotToProfileInterceptor,
     CaptureAddressIntentCaptureSlotsToProfileInterceptor,
     DialogManagementStateInterceptor
-   
-  
-
   )
   .addResponseInterceptors(SessionWillEndInterceptor)
-  //.addErrorHandlers(ErrorHandler)
-  .withDynamoDbClient()
-    .withAutoCreateTable(true)
-   .withTableName("theFoodie")
+  .addErrorHandlers(ErrorHandler)
+  //.withPersistenceAdapter()
+  //.withApiClient(new Alexa.DefaultApiClient())
+  .withAutoCreateTable(true)
+  .withTableName("theFoodie")
   .lambda();
