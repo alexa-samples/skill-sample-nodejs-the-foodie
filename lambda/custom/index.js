@@ -398,13 +398,13 @@ const HasConsentTokenRequestInterceptor = {
       console.log(JSON.stringify(address));
   
       let currentTime;
-      let localeInfo;
+      let localeInfo = {"location": "Asia/Tokyo"};
       if (address.postalCode) {
 
-        localeInfo = await tzr.getByZip(address.postalCode);
+        //localeInfo = await tzr.getByZip(address.postalCode);
         currentTime = getCurrentTime(localeInfo.location);
-
-        sessionAttributes.profile.location.address.zip = address.postalCode;
+        console.log(JSON.stringify(sessionAttributes));
+        //sessionAttributes.profile.location.address.zip = address.postalCode;
 
         console.log('by zip', JSON.stringify(localeInfo));
         console.log('current time: zip: ', currentTime);
@@ -643,27 +643,27 @@ function getWelcomeMessage(sessionAttributes) {
   let speechText = "";
 
   if (sessionAttributes.isNew) {
-    speechText += "<say-as interpret-as=\"interjection\">Howdy!</say-as> ";
-    speechText += "Welcome to The Foodie! ";
-    speechText += "I’ll help you decide what to eat right now. ";
-    speechText += "Let's get started. ";
-    speechText += "If you'd like me to recommend meals without asking what time ";
-    speechText += "it is, please give me permission to lookup your time zone ";
-    speechText += "with the companion app. ";
-    speechText += "You'll only need to do this once. ";
+    // speechText += "<say-as interpret-as=\"interjection\">Howdy!</say-as> ";
+    speechText += "フーディーへようこそ。";
+    speechText += "今、食べたいものを決めるお手伝いをしますよ。";
+    speechText += "さあ、始めましょう。";
+    //speechText += "If you'd like me to recommend meals without asking what time ";
+    //speechText += "it is, please give me permission to lookup your time zone ";
+    //speechText += "with the companion app. ";
+    // speechText += "You'll only need to do this once. ";
   } else {
-    speechText += "Welcome back!! ";
+    speechText += "お帰りなさい。";
 
     const timeOfDay = sessionAttributes.timeOfDay;
     if (timeOfDay) {
       speechText += getTimeOfDayMessage(timeOfDay);
     } else {
-      speechText += "It's time to stuff your face with delicious food. ";
+      speechText += "何か美味しいもの食べましょう。";
     }
     
     if (sessionAttributes.recommendations.previous.meal) {
-      speechText += "It looks like last time you had " + sessionAttributes.recommendations.previous.meal + ". ";
-      speechText += "I wonder what it will be today. ";
+      speechText += "前回は、" + sessionAttributes.recommendations.previous.meal + "を食べたようですよ。";
+      speechText += "今日は何がいいですかね。";
     }
     
   }
@@ -683,35 +683,48 @@ function randomPhrase(phraseList) {
 
 const timeOfDayMessages = {
   breakfast: [
-    "It looks like it's breakfast. ",
-    "<say-as interpret-as=\"interjection\">cock a doodle doo</say-as> It's time for breakfast. ", 
-    "Good morning! Time for breakfast"
-
+  //  "It looks like it's breakfast. ",
+  //  "<say-as interpret-as=\"interjection\">cock a doodle doo</say-as> It's time for breakfast. ", 
+  //  "Good morning! Time for breakfast"
+    '朝ごはんの時間ですよ',
+    '<say-as interpret-as=\"interjection\">おはようございます</say-as>。朝ごはんの時間ですね。',
+    '<say-as interpret-as=\"interjection\">おはよう</say-as>。朝ごはんだよー'
   ],
   brunch: [
-    "<say-as interpret-as=\"interjection\">cock a doodle doo</say-as> Let's get some brunch! ", 
-    "It's time for brunch. "
+    //"<say-as interpret-as=\"interjection\">cock a doodle doo</say-as> Let's get some brunch! ", 
+    //"It's time for brunch. "
+    '<say-as interpret-as=\"interjection\">おはよう</say-as>。ブランチにしましょう。'
   ],
   lunch: [
-    "Lunch time! ",
-    "Time for lunch. "
+    //"Lunch time! ",
+    //"Time for lunch. "
+    'ランチタイムです！',
+    'お昼の時間ですよ',
+    'ランチの時間です'
   ],
   dinner: [
-    "It's dinner time. ",
-    "It's supper time. "
+    //"It's dinner time. ",
+    //"It's supper time. "
+    '夕食の時間です。',
+    '晩御飯の時間です。',
+    'ディナーの時間です。'
   ],
   midnight: [
-    "<say-as interpret-as=\"interjection\">wowza</say-as> You're up late! You looking for a midnight snack? ",
-    "It's time for a midnight snack. "
+    //"<say-as interpret-as=\"interjection\">wowza</say-as> You're up late! You looking for a midnight snack? ",
+    //"It's time for a midnight snack. "
+    '<say-as interpret-as=\"interjection\">あらら</say-as>、夜更かししてますね。何か夜食を食べたくなりましたか？',
+    'お夜食の時間です。'
   ]
 };
 
 // gets the prompt based upon the context of the skill.
 function getPrompt(sessionAttributes) {
 
-  let speechText =  "For now, what time of day is it?";
+  //let speechText =  "For now, what time of day is it?";
+  let speechText =  "今何時ですか？";
   if (!sessionAttributes.isNew) {
-    speechText = "Let's narrow it down. What flavors do you feel like? You can say things like spicy, savory, greasy, and fresh.";
+    //speechText = "Let's narrow it down. What flavors do you feel like? You can say things like spicy, savory, greasy, and fresh.";
+    speechText = '絞りこみましょう。どんな味の食べ物を食べたいですか？'
   }
 
   return speechText;
@@ -889,8 +902,9 @@ function getCurrentTime(location) {
   }
   
   tz_offset = offset * 60 * 60 * 1000;
-  const currentTime = new Date(new Date().getTime() + tz_offset);
-  
+  // const currentTime = new Date(new Date().getTime() + tz_offset);
+ 
+  const currentTime = Moment().tz("Asia/Tokyo").format();
   return currentTime;
 }
 
@@ -934,7 +948,7 @@ exports.handler = skillBuilder
   )
   .addRequestInterceptors(
     NewSessionRequestInterceptor,
-    HasConsentTokenRequestInterceptor,
+    //HasConsentTokenRequestInterceptor,
     RecommendationIntentStartedRequestInterceptor,
     RecommendationIntentCaptureSlotToProfileInterceptor,
     CaptureAddressIntentCaptureSlotsToProfileInterceptor,

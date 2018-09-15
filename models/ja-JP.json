@@ -1,7 +1,7 @@
 {
   "interactionModel": {
       "languageModel": {
-          "invocationName": "フーディー",
+          "invocationName": "お食事ガイド",
           "intents": [
               {
                   "name": "AMAZON.CancelIntent",
@@ -51,11 +51,11 @@
                           "name": "deliveryOption",
                           "type": "deliveryOptionType",
                           "samples": [
-                              "I want to eat {deliveryOption}",
-                              "I'll try my hand at {deliveryOption}",
-                              "try my hand at {deliveryOption}",
-                              "I want to a {deliveryOption}",
-                              "I want to get {deliveryOption}"
+                              "{deliveryOption} したい",
+                              "{deliveryOption} で食べたい",
+                              "{deliveryOption} で作りたい",
+                              "{deliveryOption} してほしい",
+                              "{deliveryOption} にしようかな"
                           ]
                       },
                       {
@@ -64,20 +64,20 @@
                       }
                   ],
                   "samples": [
-                      "I'm hangry",
-                      "I'm on the {diet}",
-                      "I'm allergic to {allergies} and I'm {diet}",
-                      "I'm allergic to {allergies}",
-                      "{cuisine} sounds great",
-                      "It's {timeOfDay}",
-                      "I want to eat {deliveryOption}",
-                      "I want {meal}",
-                      "I want a {meal}",
-                      "I want a {meal} for {timeOfDay}",
-                      "I want to eat {cuisine} for {timeOfDay}",
-                      "I want something {cuisine}",
-                      "it's {timeOfDay} time",
-                      "I'm hungry"
+                      "お腹がすいた",
+                      "{diet} しています",
+                      "{allergies} アレルギーで {diet} 中です",
+                      "{allergies} にアレルギーがあります",
+                      "{cuisine} がいいな",
+                      "{timeOfDay}",
+                      "{deliveryOption} したい",
+                      "{meal} が食べたい",
+                      "{meal} がほしい",
+                      "{timeOfDay} で {meal} を食べたい",
+                      "{timeOfDay} で {cuisine} を食べたい",
+                      "何か {cuisine} を食べたい",
+                      "{timeOfDay} です",
+                      "腹減った"
                   ]
               },
               {
@@ -303,7 +303,7 @@
                       },
                       {
                           "name": {
-                              "value": "pescatarian"
+                              "value": "ペスカタリアン"
                           }
                       },
                       {
