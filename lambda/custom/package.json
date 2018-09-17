@@ -9,8 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ask-sdk": "^2.0.7",
-    "moment": "^2.22.2",
-    "moment-timezone": "^0.5.21"
+    "ask-sdk": "^2.0.7"
   }
 }
