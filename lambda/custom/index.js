@@ -2,9 +2,32 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk');
-const Moment = require('moment-timezone');
-const TimeZoneRecord = require('./timezone-record');
+//const Moment = require('moment-timezone');
 
+const LaunchRequestWithConsentTokenHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "LaunchRequest"
+      && handlerInput.requestEnvelope.context.System.user.permissions
+      && handlerInput.requestEnvelope.context.System.user.permissions.consentToken;
+  },
+  async handle(handlerInput) {
+    const attributesManager = handlerInput.attributesManager;
+    const sessionAttributes = attributesManager.getSessionAttributes();
+
+    let speechText = getWelcomeMessage(sessionAttributes)
+      + " " 
+      + getPrompt(sessionAttributes);
+
+    const tz = await getDeviceTimeZone(handlerInput);
+
+    speechText += " "+tz;
+      
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .getResponse();
+  }
+};
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -27,26 +50,7 @@ const LaunchRequestHandler = {
   },
 };
 
-const LaunchRequestWithConsentTokenHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === "LaunchRequest"
-      && handlerInput.requestEnvelope.context.System.user.permissions
-      && handlerInput.requestEnvelope.context.System.user.permissions.consentToken;
-  },
-  async handle(handlerInput) {
-    const attributesManager = handlerInput.attributesManager;
-    const sessionAttributes = attributesManager.getSessionAttributes();
 
-    const speechText = getWelcomeMessage(sessionAttributes)
-      + " " 
-      + getPrompt(sessionAttributes);
-      
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse();
-  }
-};
 
 const SIPRecommendationIntentHandler = {
   canHandle(handlerInput) {
@@ -106,7 +110,7 @@ const SuggestMealRecommendationIntentHandler = {
       && !intentSlotsNeedDisambiguation(handlerInput.requestEnvelope.request.intent, slots);
   },
   handle(handlerInput) {
-    console.log('SuggestMealRecommendationIntent:', handlerInput.requestEnvelope.request)
+    console.log('SuggestMealRecommendationIntent:', handlerInput.requestEnvelope.request);
 
     const attributesManager = handlerInput.attributesManager;
     const sessionAttributes = attributesManager.getSessionAttributes();
@@ -114,14 +118,14 @@ const SuggestMealRecommendationIntentHandler = {
 
     // TODO: Do the look up here!
 
-    sessionAttributes.recommendations.current.meals = ["Domi Maeuntang", "Mae Un Tang", "Daegu Jorim"];
+    sessionAttributes.recommendations.current.meals = ["トムヤムクン", "カレー", "チゲ鍋"];
     attributesManager.setSessionAttributes(sessionAttributes);
 
     console.log('currentIntent.slots:', JSON.stringify(currentIntent.slots));
 
     return handlerInput.responseBuilder
-      .speak("Great, I've found 3 meals: Domi Maeuntang, Mae Un Tang and Daegu Jorim which sounds best?")
-      .reprompt('Which sounds best Domi Maeuntang, Mae Un Tang or Daegu Jorim?')
+     .speak("それならおすすめの食事が三つありますよ？　トムヤンクン、カレー、チゲ鍋です。どれにしますか？")
+     .reprompt('トムヤムクン、カレー、チゲ鍋、どれにしますか？')
       .addElicitSlotDirective('meal', currentIntent)
       .getResponse();
   }
@@ -141,13 +145,13 @@ const promptForDeliveryOption = {
   handle(handlerInput) {
     
     return handlerInput.responseBuilder
-      .speak('Which would like, eat in, eat out, or make it?')
-      .reprompt('Would like to eat in, eat out, or make it?')
+      .speak('どこで食べますか？外食？お持ち帰りにする？それとも自分で作りますか？')
+      .reprompt('外食？お持ち帰り？それとも自分で作る？')
       .addElicitSlotDirective('deliveryOption')
       .getResponse();
 
   }
-}
+};
 
 const CRecommendationIntentHandler = {
   canHandle(handlerInput) {
@@ -164,7 +168,8 @@ const CRecommendationIntentHandler = {
     const attributesManager = handlerInput.attributesManager;
     const sessionAttributes = attributesManager.getSessionAttributes();
 
-    sessionAttributes.recommendations.previous = slotValues.meal.synonym;
+    //sessionAttributes.recommendations.previous = slotValues.meal.synonym;
+    sessionAttributes.recommendations.previous.meal = slotValues.meal.synonym;
     sessionAttributes[currentIntent.name] = undefined;
 
     console.log("deleting slot data for:", currentIntent.name);
@@ -177,24 +182,24 @@ const CRecommendationIntentHandler = {
     // TODO: split this into different completed handlers
     if (slotValues.deliveryOption.statusCode === "ER_SUCCESS_MATCH") {
       
-      if (slotValues.deliveryOption.resolvedValues[0] !== "make") {
+      if (slotValues.deliveryOption.resolvedValues[0] !== "作る") {
         const address = sessionAttributes.profile.location.address;
         if (address.zip || address.city && address.state) {
           // TODO: look up where the restaurants would be
           console.log("look up the restaurants");
-          speechText = "There's 2 restaurants close by korean bamboo and One pot. Which would you like?";
+          speechText = "<say-as interpret-as='interjection'>オッケー</say-as>！<break time='1s'/>近くに二件あります。マンゴーの木、アヒリエです。どちらにします？";
 
         } else {
           console.log("We need to elicit for address");
-          speechText = "To find a restaurant close by I need to know your address. What city do you live in?";
+          speechText = "近くのレストランを探します。現在地を教えてください。"
         }
       } else {
         // TODO prompt for portion
-        speechText = "Which would you like a small, medium, or large portion size?"
+        speechText = "食事の量は、多め、普通、少なめ、のどれですか？";
       }
     } else {
         // TODO: validate input for options - if we don't know ER_SUCCESS_NO_MATCH ask again
-        speechText = "Which would you like? to eat out, order delivery, or cook";
+        speechText = "どこで食べますか？外食？お持ち帰り？それとも自分で作りますか？";
         return handlerInput.responseBuilder
           .addElicitSlotDirective("deliveryOption")
           .speak(speechText)
@@ -230,7 +235,7 @@ const LookupRestaurantIntentHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak("I've sent Korean Bamboo's address to the Alexa App. Bon apetit!")
+      .speak("マンゴーの木 の住所をアレクサアプリに送りました。<break time='1s'/><say-as interpret-as='interjection'>お役に立てればうれしいです</say-as>")
       .getResponse();
   }
 };
@@ -259,8 +264,9 @@ const InProgressHasZipCaptureAddressIntentHandler = {
   handle(handlerInput) {
     const currentIntent = handlerInput.requestEnvelope.request.intent;
     const slotValues = getSlotValues(currentIntent.slots);
-    let speechText = "There's 2 restaurants close to " + slotValues.zip.synonym; 
-    speechText +=  " Korean Bamboo and One pot. Which would you like?";
+
+    let speechText = slotValues.zip.synonym + "の近くに二件見つかりました。";
+    speechText +=  "マンゴーの木、アヒリエです。どちらにしますか？";
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
@@ -279,10 +285,10 @@ const InProgressHasCityStateCaptureAddressIntentHandler = {
   handle(handlerInput) {
     const currentIntent = handlerInput.requestEnvelope.request.intent;
     const slotValues = getSlotValues(currentIntent.slots);
-    let speechText = "There's 2 restaurants close to " + slotValues.city.synonym
-      + ", " 
-      + slotValues.state.synonym
-      + "korean bamboo and One pot. Which would you like?"
+    
+    let speechText = slotValues.state.synonym + slotValues.city.synonym + "の近くに二件見つかりました。"
+    speechText +=  "マンゴーの木、アヒリエです。どちらにしますか？";
+
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
@@ -297,12 +303,12 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'This is the foodie. I will find the best meal and restaurant recommendations for you. To get started say I\'m hungry';
+    const speechText = 'お食事ガイドです。あなたのお食事選びのお手伝いをします。はじめるには「お腹がすいた」、と言ってください。どうぞ！';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('The Foodie', speechText)
+      .withSimpleCard('お食事ガイド', speechText)
       .getResponse();
   },
 };
@@ -314,11 +320,11 @@ const CancelAndStopIntentHandler = {
         || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
   },
   handle(handlerInput) {
-    const speechText = 'Goodbye!';
+    const speechText = '<say-as interpret-as="interjection">またいつでもどうぞ</say-as>';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('The Foodie', speechText)
+      .withSimpleCard('お食事ガイド', speechText)
       .getResponse();
   },
 };
@@ -343,8 +349,8 @@ const ErrorHandler = {
     console.log(error.stack);
 
     return handlerInput.responseBuilder
-      .speak('Sorry, I can\'t understand the command. Please say again.')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak('<say-as interpret-as="interjection">すみません</say-as>。ちょっとよくわかりませんでした。もう一度言ってください。')
+      .reprompt('<say-as interpret-as="interjection">すみません</say-as>。ちょっとよくわかりませんでした。もう一度言ってください。')
       .getResponse();
   },
 };
@@ -360,9 +366,7 @@ const NewSessionRequestInterceptor = {
     if (handlerInput.requestEnvelope.session.new) {
       const attributesManager = handlerInput.attributesManager;
       let sessionAttributes = attributesManager.getSessionAttributes();
-
       const persistentAttributes = await attributesManager.getPersistentAttributes();
-
       console.log('persistentAttributes:', JSON.stringify(persistentAttributes));
 
       if (!persistentAttributes.profile) {
@@ -397,19 +401,19 @@ const HasConsentTokenRequestInterceptor = {
         
       console.log(JSON.stringify(address));
   
-      let currentTime;
-      let localeInfo = {"location": "Asia/Tokyo"};
+      /*
       if (address.postalCode) {
 
-        //localeInfo = await tzr.getByZip(address.postalCode);
+        localeInfo = await tzr.getByZip(address.postalCode);
         currentTime = getCurrentTime(localeInfo.location);
         console.log(JSON.stringify(sessionAttributes));
-        //sessionAttributes.profile.location.address.zip = address.postalCode;
+        sessionAttributes.profile.location.address.zip = address.postalCode;
 
         console.log('by zip', JSON.stringify(localeInfo));
         console.log('current time: zip: ', currentTime);
       } else if (address.city && address.stateOrRegion) {
 
+        
         const city = address.city.toLowerCase();
         const state = address.stateOrRegion.toLowerCase();
 
@@ -433,6 +437,31 @@ const HasConsentTokenRequestInterceptor = {
         console.log('hasConsentTokenRequestInterceptor - sessionAttributes', JSON.stringify(sessionAttributes));
         attributesManager.setSessionAttributes(sessionAttributes);
       }
+      */
+
+      // If the locale is "Asia/Tokyo", timezone is UTC+9;
+
+  
+      const location = {
+          "address": {
+            "zip": address.postalCode,
+            "city": address.city,
+            "timezone": "Asia/Tokyo"
+       }
+      };
+
+      if(sessionAttributes.profile === undefined){
+        essionAttributes["profile"]="";
+      }else{
+        sessionAttributes.profile.location = location;
+      }
+
+      const currentTime = new Date(new Date().getTime() + 32400000); // 1000 * 60 * 60 * 9(hour)
+      sessionAttributes.timeOfDay = getTimeOfDay(currentTime);
+
+      console.log('hasConsentTokenRequestInterceptor - sessionAttributes', JSON.stringify(sessionAttributes));
+
+      attributesManager.setSessionAttributes(sessionAttributes);
     }
   }
 };
@@ -472,7 +501,7 @@ const RecommendationIntentCaptureSlotToProfileInterceptor = {
   process(handlerInput) {
     const intentName = "RecommendationIntent";
     const slots = [ "allergies", "diet"];
-    console.log('recommendationIntentCaptureSlotToProfileInterceptor')
+    console.log('recommendationIntentCaptureSlotToProfileInterceptor');
     saveNewlyFilledSlotsToSessionAttributes(handlerInput, intentName, slots, (sessionAttributes, slotName, newlyFilledSlot) => {
       sessionAttributes.profile[slotName] = newlyFilledSlot.synonym;
     });
@@ -485,8 +514,8 @@ const RecommendationIntentCaptureSlotToProfileInterceptor = {
 const CaptureAddressIntentCaptureSlotsToProfileInterceptor = {
   process(handlerInput) {
     const intentName = "CaptureAddressIntent";
-    const slots = ["zip", "city", "state"];
-    console.log('CaptureAddressIntentCaptureSlotsToProfileInterceptor')
+    const slots = ["zip", "state", "city"];
+    console.log('CaptureAddressIntentCaptureSlotsToProfileInterceptor call saveNewlyFilledSlotsToSessionAttributes');
     saveNewlyFilledSlotsToSessionAttributes(handlerInput, intentName, slots, (sessionAttributes, slotName, newlyFilledSlot) => {
       sessionAttributes.profile.location.address[slotName] = newlyFilledSlot.synonym;
     });
@@ -507,7 +536,9 @@ function saveNewlyFilledSlotsToSessionAttributes(handlerInput, intentName, slots
     && currentIntent.name === intentName) {
     
     const previousIntent = sessionAttributes[currentIntent.name];
+    console.log('CALL intentHasNewlyFilledSlots IN saveNewlyFilledSlotsToSessionAttributes ');
     const newlyFilledSlots = intentHasNewlyFilledSlots(previousIntent, currentIntent, slots);
+    console.log('saveNewlyFilledSlotsToSessionAttributes');
 
     // We only save if the slot(s) has been filled with something new.
     if (newlyFilledSlots.found) {
@@ -605,7 +636,7 @@ const requiredSlots = {
   timeOfDay: true
 };
 
-const tzr = new TimeZoneRecord();
+//const tzr = new TimeZoneRecord();
 
 /* HELPER FUNCTIONS */
 
@@ -643,14 +674,14 @@ function getWelcomeMessage(sessionAttributes) {
   let speechText = "";
 
   if (sessionAttributes.isNew) {
-    // speechText += "<say-as interpret-as=\"interjection\">Howdy!</say-as> ";
-    speechText += "フーディーへようこそ。";
-    speechText += "今、食べたいものを決めるお手伝いをしますよ。";
-    speechText += "さあ、始めましょう。";
-    //speechText += "If you'd like me to recommend meals without asking what time ";
-    //speechText += "it is, please give me permission to lookup your time zone ";
-    //speechText += "with the companion app. ";
-    // speechText += "You'll only need to do this once. ";
+    speechText += "お食事ガイドへようこそ。";
+    speechText += "あなたのお食事選びのお手伝いをしますよ？";
+    speechText += "さっそく始めましょう。<break time='1s'/>";
+    speechText += "お食事の時間について、いつも聞かないようにするには、アレクサアプリで所在地情報へのアクセスを許可してくださいね？";
+    speechText += "この操作は一回だけです。";
+    speechText += "<break time='1s'/>";
+    speechText += "それでは、今回だけ、お食事の時間帯を教えてください。";
+
   } else {
     speechText += "お帰りなさい。";
 
@@ -658,12 +689,12 @@ function getWelcomeMessage(sessionAttributes) {
     if (timeOfDay) {
       speechText += getTimeOfDayMessage(timeOfDay);
     } else {
-      speechText += "何か美味しいもの食べましょう。";
+      speechText += "さぁ、楽しいお食事にしましょう。";
     }
     
     if (sessionAttributes.recommendations.previous.meal) {
-      speechText += "前回は、" + sessionAttributes.recommendations.previous.meal + "を食べたようですよ。";
-      speechText += "今日は何がいいですかね。";
+      speechText += "前回は、" + sessionAttributes.recommendations.previous.meal + "だったようですね。";
+      speechText += "今日は、";
     }
     
   }
@@ -672,48 +703,42 @@ function getWelcomeMessage(sessionAttributes) {
 
 function getTimeOfDayMessage(timeOfDay) {
   const messages = timeOfDayMessages[timeOfDay];
+  console.log(JSON.stringify(messages));
   return randomPhrase(messages);
   
 }
 
 function randomPhrase(phraseList) {
+  console.log(JSON.stringify(phraseList));
   let i = Math.floor(Math.random() * phraseList.length);
   return(phraseList[i]);
 }
 
 const timeOfDayMessages = {
   breakfast: [
-  //  "It looks like it's breakfast. ",
-  //  "<say-as interpret-as=\"interjection\">cock a doodle doo</say-as> It's time for breakfast. ", 
-  //  "Good morning! Time for breakfast"
-    '朝ごはんの時間ですよ',
-    '<say-as interpret-as=\"interjection\">おはようございます</say-as>。朝ごはんの時間ですね。',
-    '<say-as interpret-as=\"interjection\">おはよう</say-as>。朝ごはんだよー'
+    '朝食の時間ですね？',
+    '<say-as interpret-as="interjection">おはようございます</say-as>。朝ごはんの時間ですね？',
+    '<say-as interpret-as="interjection">おはよう</say-as>。朝ごはんですよー。',
+    '<audio src="https://s3.amazonaws.com/ask-soundlibrary/animals/amzn_sfx_rooster_crow_01.mp3"/><say-as interpret-as="interjection">おはよう</say-as>。朝ですよー。'
   ],
   brunch: [
-    //"<say-as interpret-as=\"interjection\">cock a doodle doo</say-as> Let's get some brunch! ", 
-    //"It's time for brunch. "
-    '<say-as interpret-as=\"interjection\">おはよう</say-as>。ブランチにしましょう。'
+    '<say-as interpret-as="interjection">おはよう</say-as>。ブランチにしましょう。',
+    '<audio src="https://s3.amazonaws.com/ask-soundlibrary/animals/amzn_sfx_rooster_crow_02.mp3"/>プランチにしましょう。'
   ],
   lunch: [
-    //"Lunch time! ",
-    //"Time for lunch. "
-    'ランチタイムです！',
-    'お昼の時間ですよ',
-    'ランチの時間です'
+    'ランチタイムですね？',
+    'お昼の時間ですね？',
+    'ランチの時間ですね？'
   ],
   dinner: [
-    //"It's dinner time. ",
-    //"It's supper time. "
-    '夕食の時間です。',
-    '晩御飯の時間です。',
-    'ディナーの時間です。'
+    '夕食の時間ですね？',
+    '晩御飯の時間ですね？',
+    'ディナーの時間ですね？',
+    'さぁ、楽しい夕食の時間ですよ!'
   ],
   midnight: [
-    //"<say-as interpret-as=\"interjection\">wowza</say-as> You're up late! You looking for a midnight snack? ",
-    //"It's time for a midnight snack. "
-    '<say-as interpret-as=\"interjection\">あらら</say-as>、夜更かししてますね。何か夜食を食べたくなりましたか？',
-    'お夜食の時間です。'
+    '<say-as interpret-as="interjection">あらら</say-as>、夜更かししてますね。少しお腹がすきましたか？',
+    'お夜食の時間です？'
   ]
 };
 
@@ -721,10 +746,10 @@ const timeOfDayMessages = {
 function getPrompt(sessionAttributes) {
 
   //let speechText =  "For now, what time of day is it?";
-  let speechText =  "今何時ですか？";
+  let speechText =  "今は、どの食事の時間帯ですか？";
   if (!sessionAttributes.isNew) {
     //speechText = "Let's narrow it down. What flavors do you feel like? You can say things like spicy, savory, greasy, and fresh.";
-    speechText = '絞りこみましょう。どんな味の食べ物を食べたいですか？'
+    speechText = 'どんなものが食べたい気分ですか？ からい、こってり、さっぱり など、食べたいものの味を言ってみてください。'
   }
 
   return speechText;
@@ -839,11 +864,12 @@ function intentHasNewlyFilledSlots(previous, intent, slots) {
 }
 
 function buildDisambiguationPrompt(resolvedValues) {
-  let output = "Which would you like";
+  let output = "それなら";
   resolvedValues.forEach((resolvedValue, index) => {
-     output +=  `${(index === resolvedValues.length - 1) ? ' or ' : ' '}${resolvedValue.value}`; 
+     //output +=  `${(index === resolvedValues.length - 1) ? ' ' : ', '}${resolvedValue.value}`;
+     output += `${resolvedValue.value}、`;
   });
-  output += "?";
+  output += "がおすすめです。どれにしますか？";
   return output;
 }
 
@@ -893,20 +919,25 @@ function intentSlotsNeedDisambiguation(intent, slots) {
   return result;
 }
 
+/*
 function getCurrentTime(location) {
+
   const isDSTInNewYork = Moment.utc().tz("America/New_York").isDST();
 
   let offset = location.timezone;
   if (isDSTInNewYork && location.dst) {
       offset = parseInt(offset) + 1;
   }
-  
   tz_offset = offset * 60 * 60 * 1000;
-  // const currentTime = new Date(new Date().getTime() + tz_offset);
- 
-  const currentTime = Moment().tz("Asia/Tokyo").format();
+  const currentTime = new Date(new Date().getTime() + tz_offset);
+  const localTime = Moment().tz("Asia/Tokyo").format();
+
+  // if(location === "Asia/Tokyo"){
+  //  currentTime = currentTime.setTime(currentTime.getTime() + 32400000); // 1000 * 60 * 60 * 9(hour)
+  // }
   return currentTime;
 }
+*/
 
 function getTimeOfDay(currentTime) {
   const currentHour = currentTime.getHours();
@@ -925,6 +956,22 @@ function getTimeOfDay(currentTime) {
     timeOfDay = "dinner";
   }
   return timeOfDay;
+}
+
+
+function getDeviceTimeZone(handerInput){
+  const context = handerInput.requestEnvelope.context;
+  const apiEndpoint = context.System.apiEndpoint;
+  const accessToken = context.System.apiAccessToken;
+  const deviceId = context.System.device.deviceId;
+
+  const options = {
+    uri : apiEndpoint + '/v2/devices/' + deviceId + '/settings/System.timeZone',
+    headers: {
+      'Authorization': 'Bearer' + accessToken
+    }
+  }
+  return RequestPrimise(options);
 }
 
 const skillBuilder = Alexa.SkillBuilders.standard();
@@ -948,7 +995,7 @@ exports.handler = skillBuilder
   )
   .addRequestInterceptors(
     NewSessionRequestInterceptor,
-    //HasConsentTokenRequestInterceptor,
+    HasConsentTokenRequestInterceptor,
     RecommendationIntentStartedRequestInterceptor,
     RecommendationIntentCaptureSlotToProfileInterceptor,
     CaptureAddressIntentCaptureSlotsToProfileInterceptor,
@@ -956,5 +1003,7 @@ exports.handler = skillBuilder
   )
   .addResponseInterceptors(SessionWillEndInterceptor)
   .addErrorHandlers(ErrorHandler)
-  .withTableName("theFoodie")
+  .withDynamoDbClient()
+    .withAutoCreateTable(true)
+    .withTableName("theFoodie")
   .lambda();

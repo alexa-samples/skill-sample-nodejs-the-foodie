@@ -1,616 +1,736 @@
 {
-  "interactionModel": {
-      "languageModel": {
-          "invocationName": "お食事ガイド",
-          "intents": [
-              {
-                  "name": "AMAZON.CancelIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.HelpIntent",
-                  "samples": []
-              },
-              {
-                  "name": "AMAZON.StopIntent",
-                  "samples": []
-              },
-              {
-                  "name": "RecommendationIntent",
-                  "slots": [
-                      {
-                          "name": "timeOfDay",
-                          "type": "timeOfDayType"
-                      },
-                      {
-                          "name": "cuisine",
-                          "type": "cuisineType"
-                      },
-                      {
-                          "name": "allergies",
-                          "type": "allergyType",
-                          "samples": [
-                              "{allergies} です",
-                              "{allergies} で {diet}"
-                          ]
-                      },
-                      {
-                          "name": "diet",
-                          "type": "dietType"
-                      },
-                      {
-                          "name": "meal",
-                          "type": "AMAZON.Food",
-                          "samples": [
-                              "{meal} が食べたい",
-                              "{meal} がいいな",
-                              "{meal} を食べたい"
-                          ]
-                      },
-                      {
-                          "name": "deliveryOption",
-                          "type": "deliveryOptionType",
-                          "samples": [
-                              "{deliveryOption} したい",
-                              "{deliveryOption} で食べたい",
-                              "{deliveryOption} で作りたい",
-                              "{deliveryOption} してほしい",
-                              "{deliveryOption} にしようかな"
-                          ]
-                      },
-                      {
-                          "name": "portionSize",
-                          "type": "portionSizeType"
-                      }
-                  ],
-                  "samples": [
-                      "お腹がすいた",
-                      "{diet} しています",
-                      "{allergies} アレルギーで {diet} 中です",
-                      "{allergies} にアレルギーがあります",
-                      "{cuisine} がいいな",
-                      "{timeOfDay}",
-                      "{deliveryOption} したい",
-                      "{meal} が食べたい",
-                      "{meal} がほしい",
-                      "{timeOfDay} で {meal} を食べたい",
-                      "{timeOfDay} で {cuisine} を食べたい",
-                      "何か {cuisine} を食べたい",
-                      "{timeOfDay} です",
-                      "腹減った"
-                  ]
-              },
-              {
-                  "name": "CaptureAddressIntent",
-                  "slots": [
-                      {
-                          "name": "city",
-                          "type": "AMAZON.City",
-                          "samples": [
-                              "{city} {state}"
-                          ]
-                      },
-                      {
-                          "name": "state",
-                          "type": "AMAZON.Region",
-                          "samples": [
-                              "{city} {state}"
-                          ]
-                      },
-                      {
-                          "name": "zip",
-                          "type": "AMAZON.NUMBER",
-                          "samples": [
-                              "{city} {state}",
-                              "{city}",
-                              "{state}"
-                          ]
-                      }
-                  ],
-                  "samples": [
-                      "住所を登録",
-                      "{city} {state}",
-                      "{city}",
-                      "郵便番号は{zip}です",
-                      "{city} {state}に住んでいます"
-                  ]
-              },
-              {
-                  "name": "ExplainPortionSizeIntent",
-                  "slots": [
-                      {
-                          "name": "portion",
-                          "type": "portionSizeType"
-                      }
-                  ],
-                  "samples": [
-                      "how many calories is a {portion}",
-                      "how many calories is a {portion} portion"
-                  ]
-              },
-              {
-                  "name": "LookupRestaurantIntent",
-                  "slots": [
-                      {
-                          "name": "restuarant",
-                          "type": "restaurantType"
-                      }
-                  ],
-                  "samples": [
-                      "{restuarant} に行きたい",
-                      "{restuarant} はどうかな",
-                      "{restuarant}"
-                  ]
-              }
-          ],
-          "types": [
-              {
-                  "name": "timeOfDayType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "朝食"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "ブランチ"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "ランチ"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "夕食"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "夜食"
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "cuisineType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "洋食"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "和食",
-                              "synonyms": [
-                                "日本食"
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "お食事ガイド",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "RecommendationIntent",
+                    "slots": [
+                        {
+                            "name": "timeOfDay",
+                            "type": "timeOfDayType",
+                            "samples": [
+                                "もうすぐ {timeOfDay} です",
+                                "もう {timeOfDay} の時間です",
+                                "そろそろ {timeOfDay} です",
+                                "そろそろ {timeOfDay} の時間です",
+                                "{timeOfDay} の時間です",
+                                "{timeOfDay} です"
                             ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "中華",
-                              "synonyms": [
-                                  "中華料理"
-                              ]
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "allergyType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "none",
-                              "synonyms": [
-                                  "ありません",
-                                  "ないです",
-                                  "なし"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "大豆"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "小麦"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "ナッツ"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "貝"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "魚"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "ピーナッツ"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "卵"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "牛乳"
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "dietType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "グルテンフリー"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "デトックス",
-                              "synonyms": [
-                                  "マスタークレンズ",
-                                  "ジュースクレンズ"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "底炭水化物",
-                              "synonyms": [
-                                  "プロテイン",
-                                  "アトキンスダイエット",
-                                  "ロカボ"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "低カロリー",
-                              "synonyms": [
-                                  "nutrisystem",
-                                  "cookie diet",
-                                  "body for life",
-                                  "intermittent fasting"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "ketogenic",
-                              "synonyms": [
-                                  "keto"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "ペスカタリアン"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "vegan"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "vegetarian"
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "restaurantType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "Blue Mill Burgers"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "Mick's"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "Fred Frobin"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "One Pot"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "Korean Bamboo"
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "mealType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "Daegu Jorim"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "Mae Un Tang"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "Domi Maeuntang"
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "deliveryOptionType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "外食",
-                              "synonyms": [
-                                  "外で食べる",
-                                  "レストラン"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "お持ち帰り",
-                              "synonyms": [
-                                  "家で食べる",
-                                  "テイクアウトする",
-                                  "お持ち帰りする"
-                              ]
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "作る",
-                              "synonyms": [
-                                  "自炊する",
-                                  "自分で作る"
-                              ]
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "portionSizeType",
-                  "values": [
-                      {
-                          "name": {
-                              "value": "大盛り"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "普通"
-                          }
-                      },
-                      {
-                          "name": {
-                              "value": "少なめ"
-                          }
-                      }
-                  ]
-              }
-          ]
-      },
-      "dialog": {
-          "intents": [
-              {
-                  "name": "CaptureAddressIntent",
-                  "confirmationRequired": false,
-                  "prompts": {},
-                  "slots": [
-                      {
-                          "name": "city",
-                          "type": "AMAZON.City",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.497897651534.178657323991"
-                          }
-                      },
-                      {
-                          "name": "state",
-                          "type": "AMAZON.Region",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.497897651534.366407409919"
-                          }
-                      },
-                      {
-                          "name": "zip",
-                          "type": "AMAZON.NUMBER",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.497897651534.1026488067712"
-                          }
-                      }
-                  ]
-              },
-              {
-                  "name": "RecommendationIntent",
-                  "confirmationRequired": false,
-                  "prompts": {},
-                  "slots": [
-                      {
-                          "name": "timeOfDay",
-                          "type": "timeOfDayType",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.618525487752.1350405322907"
-                          }
-                      },
-                      {
-                          "name": "cuisine",
-                          "type": "cuisineType",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.618525487752.1187001966630"
-                          }
-                      },
-                      {
-                          "name": "allergies",
-                          "type": "allergyType",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.618525487752.47288599882"
-                          }
-                      },
-                      {
-                          "name": "diet",
-                          "type": "dietType",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.618525487752.1437733150643"
-                          }
-                      },
-                      {
-                          "name": "meal",
-                          "type": "AMAZON.Food",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.571225698000.1192442834145"
-                          }
-                      },
-                      {
-                          "name": "deliveryOption",
-                          "type": "deliveryOptionType",
-                          "confirmationRequired": false,
-                          "elicitationRequired": true,
-                          "prompts": {
-                              "elicitation": "Elicit.Slot.571225698000.292982357814"
-                          }
-                      },
-                      {
-                          "name": "portionSize",
-                          "type": "portionSizeType",
-                          "confirmationRequired": false,
-                          "elicitationRequired": false,
-                          "prompts": {}
-                      }
-                  ]
-              }
-          ]
-      },
-      "prompts": [
-          {
-              "id": "Elicit.Slot.497897651534.1026488067712",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "郵便番号は何番ですか？"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.497897651534.366407409919",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "何県にお住まいですか？"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.497897651534.178657323991",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "どこの市区町村にお住まいですか？"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.618525487752.47288599882",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "ピーナッツ、や、魚介、のようにアレルギーがあれば教えてください。"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.618525487752.1350405322907",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "What time of day is it?"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.618525487752.1437733150643",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "ベジタリアン、や、ペスカタリアン、のように食事制限があれば教えてください。"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.618525487752.1187001966630",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "ランチ。いいですねぇ。いくつかおすすめがありますよ。少し絞り込みましょう。どんなものが食べたいですか？辛い系、濃い系、さっぱり系？"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.571225698000.1192442834145",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "何を食べたいですか？"
-                  }
-              ]
-          },
-          {
-              "id": "Elicit.Slot.571225698000.292982357814",
-              "variations": [
-                  {
-                      "type": "PlainText",
-                      "value": "外で食べますか？お持ち帰りしますか？それとも自分で作りますか？"
-                  }
-              ]
-          }
-      ]
-  }
+                        },
+                        {
+                            "name": "cuisine",
+                            "type": "cuisineType",
+                            "samples": [
+                                "{cuisine} なのがいいな"
+                            ]
+                        },
+                        {
+                            "name": "allergies",
+                            "type": "allergyType",
+                            "samples": [
+                                "{allergies} アレルギーです",
+                                "{allergies} はちょっとまずいです",
+                                "{allergies} がだめです",
+                                "{allergies} がダメです",
+                                "{allergies} が食べられません",
+                                "{allergies} です",
+                                "{allergies} で {diet}"
+                            ]
+                        },
+                        {
+                            "name": "diet",
+                            "type": "dietType",
+                            "samples": [
+                                "{diet} してます",
+                                "私 {diet} なんです",
+                                "{diet} なんです",
+                                "{diet} 中です",
+                                "{diet}",
+                                "{diet} しています",
+                                "{diet} です"
+                            ]
+                        },
+                        {
+                            "name": "meal",
+                            "type": "AMAZON.Food",
+                            "samples": [
+                                "{meal} とかがいいな",
+                                "{meal} が食べたい",
+                                "{meal} がいいな",
+                                "{meal} を食べたい"
+                            ]
+                        },
+                        {
+                            "name": "deliveryOption",
+                            "type": "deliveryOptionType",
+                            "samples": [
+                                "{deliveryOption} で食べようかな",
+                                "{deliveryOption} うかな",
+                                "{deliveryOption} ます",
+                                "{deliveryOption} します",
+                                "{deliveryOption} したい",
+                                "{deliveryOption} がいいな",
+                                "{deliveryOption} で",
+                                "{deliveryOption} にしようかな"
+                            ]
+                        },
+                        {
+                            "name": "portionSize",
+                            "type": "portionSizeType"
+                        }
+                    ],
+                    "samples": [
+                        "{allergies} が食べられなくて {diet} しています",
+                        "{allergies} がだめで {diet} 中です",
+                        "{diet} しています",
+                        "{allergies} アレルギーがあって {diet} しています",
+                        "{timeOfDay} の時間です",
+                        "{timeOfDay}",
+                        "何か {cuisine} いものが食べたい",
+                        "{cuisine} のがいいな",
+                        "{cuisine} のが食べたいな",
+                        "{cuisine}",
+                        "{timeOfDay} タイムです",
+                        "そろそろ {timeOfDay} の時間です",
+                        "もうすぐ {timeOfDay} の時間です",
+                        "今は {timeOfDay} の時間です",
+                        "{timeOfDay} には {meal} がいいな",
+                        "{allergies} が食べられません",
+                        "{allergies} があります",
+                        "お腹が空いた",
+                        "{diet} 中です",
+                        "{allergies} で {diet} しています",
+                        "{allergies} です",
+                        "{cuisine} がいいな",
+                        "{timeOfDay} です",
+                        "{deliveryOption} で食べたい",
+                        "{meal} を食べたい",
+                        "{meal} が食べたい",
+                        "{timeOfDay} は {meal} を食べたい",
+                        "{timeOfDay} で {cuisine} が食べたい",
+                        "何か {cuisine} したものが食べたい",
+                        "{timeOfDay} の時間帯です",
+                        "腹へった"
+                    ]
+                },
+                {
+                    "name": "CaptureAddressIntent",
+                    "slots": [
+                        {
+                            "name": "state",
+                            "type": "AMAZON.Region",
+                            "samples": [
+                                "{state} 都",
+                                "{state} 府",
+                                "{state} 県",
+                                "{state}",
+                                "{state} {city}"
+                            ]
+                        },
+                        {
+                            "name": "city",
+                            "type": "AMAZON.City",
+                            "samples": [
+                                "{city} の近く",
+                                "{city} あたり",
+                                "{city}",
+                                "{state} {city}"
+                            ]
+                        },
+                        {
+                            "name": "zip",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{city} {state}",
+                                "{city}",
+                                "{state}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "住所を登録して",
+                        "{state} {city}",
+                        "{city}",
+                        "郵便番号は {zip} です",
+                        "{state} {city} に住んでいます"
+                    ]
+                },
+                {
+                    "name": "ExplainPortionSizeIntent",
+                    "slots": [
+                        {
+                            "name": "portion",
+                            "type": "portionSizeType"
+                        }
+                    ],
+                    "samples": [
+                        "{portion} にするとカロリーはどれくらい",
+                        "{portion} のカロリーはどれくらい",
+                        "{portion} は何カロリーくらいあるの",
+                        "{portion} は何カロリー",
+                        "{portion} は何カロリーありますか"
+                    ]
+                },
+                {
+                    "name": "LookupRestaurantIntent",
+                    "slots": [
+                        {
+                            "name": "restuarant",
+                            "type": "restaurantType"
+                        }
+                    ],
+                    "samples": [
+                        "じゃあ {restuarant} で",
+                        "{restuarant} にしよう",
+                        "{restuarant} がいいな",
+                        "{restuarant} へ行きたい",
+                        "{restuarant} はどうかな",
+                        "{restuarant}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "timeOfDayType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "朝食",
+                                "synonyms": [
+                                    "朝飯",
+                                    "朝めし",
+                                    "朝御飯",
+                                    "朝ご飯",
+                                    "朝ごはん"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ブランチ"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ランチ",
+                                "synonyms": [
+                                    "昼めし",
+                                    "昼飯",
+                                    "昼ご飯",
+                                    "昼御飯",
+                                    "昼ごはん",
+                                    "昼食"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "夕食",
+                                "synonyms": [
+                                    "晩めし",
+                                    "晩飯",
+                                    "晩ごはん",
+                                    "晩ご飯",
+                                    "晩御飯",
+                                    "ディナー"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "夜食"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "cuisineType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "インド料理",
+                                "synonyms": [
+                                    "からい"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ラーメン",
+                                "synonyms": [
+                                    "こってり",
+                                    "濃い",
+                                    "あっさり"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "タイ料理",
+                                "synonyms": [
+                                    "からい",
+                                    "さっぱり"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "洋食",
+                                "synonyms": [
+                                    "こってり",
+                                    "濃い"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "和食",
+                                "synonyms": [
+                                    "さっぱり",
+                                    "あっさり"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "中華",
+                                "synonyms": [
+                                    "こってり",
+                                    "からい"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "allergyType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "なし",
+                                "synonyms": [
+                                    "ない",
+                                    "ありません",
+                                    "ないです"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "大豆",
+                                "synonyms": [
+                                    "豆"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "小麦"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ナッツ"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "貝",
+                                "synonyms": [
+                                    "貝類"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "魚",
+                                "synonyms": [
+                                    "お魚"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ピーナッツ"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "卵",
+                                "synonyms": [
+                                    "タマゴ",
+                                    "玉子",
+                                    "たまご"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "牛乳",
+                                "synonyms": [
+                                    "ミルク"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "dietType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "炭水化物ダイエット",
+                                "synonyms": [
+                                    "ロカボダイエット",
+                                    "プロテインダイエット"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "糖質ダイエット",
+                                "synonyms": [
+                                    "糖質抜きダイエット",
+                                    "糖質制限ダイエット"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ベジタリアン",
+                                "synonyms": [
+                                    "菜食主義"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "restaurantType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "アヒリエ"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "マンゴーの木"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "宇宙の山ちゃん"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "コケバーガー"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "としの屋"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "deliveryOptionType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "外食",
+                                "synonyms": [
+                                    "店",
+                                    "お店",
+                                    "外",
+                                    "外で食べる",
+                                    "レストラン"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "お持ち帰り",
+                                "synonyms": [
+                                    "オフィス",
+                                    "家",
+                                    "テイクアウトする",
+                                    "テイクアウトする",
+                                    "持ち帰る"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "作る",
+                                "synonyms": [
+                                    "自炊する",
+                                    "自分で作る"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "portionSizeType",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "多め",
+                                "synonyms": [
+                                    "たっぷり",
+                                    "しっかり",
+                                    "がっつり",
+                                    "大"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "普通",
+                                "synonyms": [
+                                    "中くらい",
+                                    "並"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "少なめ",
+                                "synonyms": [
+                                    "ちょっとだけ",
+                                    "ちょっと",
+                                    "小"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "CaptureAddressIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "state",
+                            "type": "AMAZON.Region",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.497897651534.366407409919"
+                            }
+                        },
+                        {
+                            "name": "city",
+                            "type": "AMAZON.City",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.497897651534.178657323991"
+                            }
+                        },
+                        {
+                            "name": "zip",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.497897651534.1026488067712"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "RecommendationIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "timeOfDay",
+                            "type": "timeOfDayType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.618525487752.1350405322907"
+                            }
+                        },
+                        {
+                            "name": "cuisine",
+                            "type": "cuisineType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.618525487752.1187001966630"
+                            }
+                        },
+                        {
+                            "name": "allergies",
+                            "type": "allergyType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.618525487752.47288599882"
+                            }
+                        },
+                        {
+                            "name": "diet",
+                            "type": "dietType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.618525487752.1437733150643"
+                            }
+                        },
+                        {
+                            "name": "meal",
+                            "type": "AMAZON.Food",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.571225698000.1192442834145"
+                            }
+                        },
+                        {
+                            "name": "deliveryOption",
+                            "type": "deliveryOptionType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.571225698000.292982357814"
+                            }
+                        },
+                        {
+                            "name": "portionSize",
+                            "type": "portionSizeType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.497897651534.1026488067712",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "郵便番号は何番ですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.497897651534.366407409919",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "何県にお住まいですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.497897651534.178657323991",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "どちらの市区町村にお住まいですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.618525487752.47288599882",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "アレルギーで何か食べられないものはありますか？"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "食物アレルギーがあったり、何かダイエットをしていますか？"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "アレルギーなど、何か食べられないものや、ダイエットをしていたら教えてください。"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "ピーナッツや蕎麦のような食物アレルギーや、何かダイエットをされていたら教えてください。"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.618525487752.1350405322907",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "どの時間帯のお食事ですか？朝食、ランチ、それとも夕食ですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.618525487752.1437733150643",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "ダイエットや菜食主義など、食習慣があれば教えてください。"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.618525487752.1187001966630",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "いくつかおすすめがありますよ？ どんなものが食べたい気分ですか？からい、こってり、さっぱり など、食べたいものの味を言ってみてください。"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.571225698000.1192442834145",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "何か食べたいものありますか？"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "何が食べたいですか？"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "何を食べたいですか？"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.571225698000.292982357814",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "外で食べますか？お持ち帰りしますか？それとも、自分で作りますか？"
+                    }
+                ]
+            }
+        ]
+    }
 }

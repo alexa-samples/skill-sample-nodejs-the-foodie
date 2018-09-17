@@ -141,9 +141,19 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 	$ ask deploy
 	```
 
+2. Once deployed, additional permissions need to be added to the AWS IAM role being used by the skill since it is persisting data in Amazon DynamoDB.  Navigate to the [AWS IAM console](https://console.aws.amazon.com/iam/home#/roles).
+
+	> _Note: We are adding the full access policy here for convenience.  For a production skill, you should use a more targeted policy restricting access to just the required resources.  Refer to the [DynamoDB documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/access-control-overview.html) for more details._
+
+	1. Locate the role for your skill (by default, it is named ```ask-lambda-<your skill name>```). For example 'ask-lambda-the-foodie'. In browser reduce screen size to 75% to see all the AWS IAM role names.
+
+	1. Click on the role, then click **Attach Policy**.
+	1. Search for **AmazonDynamoDBFullAccess** and click the check box next to it.
+	1. Click **Attach Policy**.
+
 ### Testing
 
-1. To test, you need to login to Alexa Developer Console, and enable the "Test" switch on your skill from the "Test" Tab.
+1. To test, you need to login to [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask) , select the skill and enable the "Test" switch on your skill from the "Test" Tab.
 
 2. Simulate verbal interaction with your skill through the command line using the following example:
 
