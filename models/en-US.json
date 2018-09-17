@@ -19,8 +19,8 @@
           "name": "RecommendationIntent",
           "slots": [
             {
-              "name": "timeOfDay",
-              "type": "timeOfDayType"
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME"
             },
             {
               "name": "cuisine",
@@ -60,11 +60,17 @@
               ]
             },
             {
+              "name": "timeOfDay",
+              "type": "timeOfDayType"
+            },
+            {
               "name": "portionSize",
               "type": "portionSizeType"
             }
           ],
           "samples": [
+            "{name}",
+            "my name is {name}",
             "I'm hangry",
             "I'm on the {diet}",
             "I'm allergic to {allergies} and I'm {diet}",
@@ -471,13 +477,10 @@
           "confirmationRequired": false,
           "slots": [
             {
-              "name": "timeOfDay",
-              "type": "timeOfDayType",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.618525487752.1350405322907"
-              }
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME",
+              "elicitationRequired": false,
+              "confirmationRequired": false
             },
             {
               "name": "cuisine",
@@ -523,6 +526,12 @@
               "prompts": {
                 "elicitation": "Elicit.Slot.571225698000.292982357814"
               }
+            },
+            {
+              "name": "timeOfDay",
+              "type": "timeOfDayType",
+              "elicitationRequired": false,
+              "confirmationRequired": false
             },
             {
               "name": "portionSize",
@@ -594,7 +603,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Lunch, I love lunch I know quite a few great options. Let's narrow it down. What flavors do feel like You can say things like spicy, savory, greasy, and fresh."
+            "value": "I recommend cuisines based on flavor profiles. You can say things like spicy, savory, greasy, and fresh. What sounds good?"
           }
         ]
       },
