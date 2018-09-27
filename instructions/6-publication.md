@@ -1,103 +1,103 @@
-# Build An Alexa the foodie Skill
+# Alexa 豆知識スキルの作成
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-locked._TTH_.png)](./1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-locked._TTH_.png)](./2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-locked._TTH_.png)](./3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-locked._TTH_.png)](./4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-locked._TTH_.png)](./5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-on._TTH_.png)](./6-publication.md)
-## Get Your Skill Certified and Published
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-locked.png)](./1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-locked.png)](./2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-locked.png)](./3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-locked.pn)](./4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-locked.png)](./5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-on.png)](./6-publication.md)
 
-We are almost done!  The last step is to add the metadata that your skill will use in the [Skill Store](http://amazon.com/skills).  This page will walk you through the remaining steps to launch your skill!
+## スキルの認定と公開
 
-1. Select the **Launch** link  from the top navigation menu.
+スキルの公開までもう少しです。最後のステップは[Alexaスキルストア](http://amazon.com/skills)で利用されるメタデータの追加です。このページで必要な手順を解説します。また、申請時にありがちなミスを避ける方法について、いくつかヒントを提示します。
 
-2. Fill out the form fields per the guidance on the screen. Hover over the question mark icons for details regarding each respective field. **Fields marked with an Asterisk, are required!**
-	* Take the time to get these right so that your skill will pass certification!
+1.  [Amazon開発者ポータル](https://developer.amazon.com/edw/home.html#/skills/list)で **公開** タブを開きます。
 
-3.  **Write your skill descriptions.**
+2. 画面上のガイダンスに従ってそれぞれのフィールドを記入します。はてなマークにマウスカーソルをあてると、そのフィールドのヘルプがポップアップ表示されます。**アスタリスクマークのついたフィールドは必須です**
+	* 審査を無事通過するためにも、お時間をいただき正確な記入をお願いします。
 
-       *  **Spend some time coming up with an enticing, succinct description.**  This is one of the few places you have an opportunity to attract new users, so make the most of it!  These descriptions show up in the list of skills available in the [Alexa app](http://alexa.amazon.com/spa/index.html#skills) and the [skills store](http://www.amazon.com/skills).
+3.  **スキルの説明**
 
-4.  For your example phrases, **come up with the three most exciting ways** a user can talk to your skill.
+	魅力的で簡潔な説明文を入力してください。説明文はユーザにあなたのスキルの魅力を伝えるためのものです。最大限に活用しましょう。これらの説明文は[Alexaアプリ](http://alexa.amazon.co.jp/spa/index.html#skills)のスキル一覧ページに表示されます。
+ 
+4.  **サンプルフレーズ** 
 
-    *  Make sure that each of your example phrases are a **perfect match with one of your Sample Utterances.**  Incorrect example phrases are one of the most common reasons that skills fail certification, so we have provided a short list of things to consider as you write your example phrases:
+	ユーザーがスキルに話しかけるときに最も使われそうなフレーズを3つ入力します。
 
-       | Common Failure Points for Example Phrases |
+    *  **サンプルフレーズ** には、サンプル発話と完全に一致するものを入力してください。ここを間違えてしまったことで審査が通らなかったという例がよくあります。以下にサンプルフレーズを書くときに考慮すべき事項を記載しておきます。
+
+       | サンプルフレーズを入力する際に考慮すべき事項 |
        | ----------------------------------------- |
-       | Example phrases **must** adhere to the [supported phrases](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/supported-phrases-to-begin-a-conversation?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=the-foodie-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_the-foodie-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs). |
-       | Example phrases **must** be based on sample utterances specified in your Intent Schema. |
-       | Your first example phrase **must** include a wake word and your invocation name. |
-       | Example phrases **must** provide a contextual response. |
+       | サンプルフレーズは[ユーザーによるカスタムスキルの呼び出し](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/supported-phrases-to-begin-a-conversation)に書かれているルールに沿っていること。 |
+       | サンプルフレーズは対話モデルで定義した **サンプル発話**に基づいたものであること。 |
+       | 1番目のサンプルフレーズは**ウェイクワードと呼び出し名**を含んでいること。 |
+       | サンプルフレーズは**適切な応答を返す**ものであること。 |
 
-    *  **Choose three example phrases that are likely to be the most common ways that users will attempt to interact with your skill.**  Make sure that each of them works well, and provides an excellent user experience.
+    *  ユーザーがスキルに話しかけるときに、最も使いそうなフレーズを3つ選んでください。どのフレーズも正常に動作し、素晴らしいユーザー体験を提供するようにしてください。
 
-5.  **Create your skill's icons.**  You need two sizes of your icon: 108x108px and 512x512px.
+5.  **スキルアイコン** 
 
+	スキルのアイコンは **108x108** ピクセルと **512x512** ピクセルの2通りのサイズを用意する必要があります。
 
-    *  **Make sure you have the rights to the icons you create.** Please don't violate any trademarks or copyrights.
-    *  **If you don't have software to make icons, try one of these free options:**
+    *  自分が権利を持っているものでアイコンを作成してください。商標やコピーライトを侵害しないようにしてください。
+    *  アイコンを作成するソフトウェアをお持ちでない場合は、以下のような無料ソフトから選ぶと良いでしょう。
 
        *  [GIMP](https://www.gimp.org/) (Windows/Mac/Linux)
-       *  [Canva](https://www.canva.com/) (Web)
        *  [Paint.NET](http://www.getpaint.net/index.html) (Windows)
        *  [Inkscape](http://inkscape.org) (Windows/Mac/Linux)
        *  [Iconion](http://iconion.com/) (Windows/Mac)
 
-    *  To make it easier to get started, we've created blank versions of these icons in both sizes for many formats:
+    *  各サイズのブランクのアイコンを様々なフォーマットでご用意しました。よろしければお使いください。
 
-       *  [PSD](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/psd._TTH_.zip)
-       *  [PNG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/png._TTH_.zip)
-       *  [GIF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/gif._TTH_.zip)
-       *  [PDF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/pdf._TTH_.zip)
-       *  [JPG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/jpg._TTH_.zip)
-       *  [SVG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/svg._TTH_.zip)
-       *  [PDN](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/pdn._TTH_.zip) - for [Paint.NET](http://www.getpaint.net/index.html)
-       *  [XCF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/xcf._TTH_.zip) - for [GIMP](https://www.gimp.org/)
+       *  [PSD](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/psd.zip)
+       *  [PNG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/png.zip)
+       *  [GIF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/gif.zip)
+       *  [PDF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/pdf.zip)
+       *  [JPG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/jpg.zip)
+       *  [SVG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/svg.zip)
+       *  [PDN](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/pdn.zip) - [Paint.NET](http://www.getpaint.net/index.html)用
+       *  [XCF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/xcf.zip) - [GIMP](https://www.gimp.org/)用
 
-6. Choose the most appropriate category for your skill.
+7.  **キーワード** ユーザーがスキルを探すときに使うであろうキーワードを全て入力してください。これは項目は任意です。[Alexaアプリ](http://alexa.amazon.co.jp)での検索ではスキル名や説明文にある単語も検索対象となるため、入力を省略しても問題ありません。スキルを探すときにユーザーに使って欲しい単語がある場合は、それらのキーワードを入力してください。複数のキーワードはカンマで区切ってください。
 
-7.  **Provide a comprehensive list of keywords for users that are searching for new skills.**  This is an optional field, and searching the [Alexa app](http://alexa.amazon.com) or the [skill store](http://www.amazon.com/skills) will also find the words in your Skill Name and descriptions, so you don't need to overdo it.  That being said, if there are words that you want users to find your skill with, you should include them here.  Separate the keywords with commas.
+8. **プライバシーポリシー URL** 必須項目ではありません。今回の豆知識スキルでは空白のままで問題ありません。
 
-8. **Privacy Policy URL.** This is an optional field, and should not be required for this the foodie skill sample.  You can leave it blank.
+9. **利用規約 URL** 必須項目ではありません。空白のままで問題ありません。
 
-9. **Terms of Use URL.** This is also optional, and you can leave it blank.
+10. 入力が完成したらページ下部の **保存して続行** ボタンをクリックし、**プライバシーとコンプライアンス** へ移動します。
 
-10. When you're ready, click **Save and Continue** at the bottom of the screen to move onto **Privacy & Compliance**
+11.  **プライバシーとコンプライアンス**にある質問に下記のガイダンスに従いながら答えてください。
 
-11. *  **Does this skill allow users to make purchases or spend real money?** For this the foodie skill, the answer is no.  For future skills, make sure you answer this appropriately.
+    *  **このスキルを使って何かを購入したり、実際にお金を支払うことができますか？** 今回の宇宙の豆知識スキルでは、**いいえ**を選択します。将来、あなたが作るスキルに適したオプションを選択してください。
 
-    *  **Does this Alexa skill collect users' personal information?** Again, for this the foodie skill, the answer is no.  If you do collect information about a user, such as names, email addresses, phone numbers, and so forth, ensure that you answer Yes to this question.
-        *  Answering "yes" to this question will also require you to provide a link to your Privacy Policy at the bottom of the page.
+    *  **このスキルはユーザーの個人情報を収集しますか？** これについても今回の宇宙の豆知識スキルでは、 **いいえ** を選択します。 もし、ユーザーの個人情報、例えば氏名やメールアドレス、電話番号等を収集しているのであれば、この質問に**はい**と答えてください。
+        *  この質問に **はい**と答えた場合、プライバシーポリシーへのリンクを提供する必要があります。
 
-    *  **Is your skill directed to children under the age of 13?** Because you customized this skill with data you provided, it is possible that you created a skill that targets children under the age of 13.  For this the foodie skill, the answer is **no** because it doesn't target a specific age group.
-        * Factors to consider in determining if this skill is directed to children under 13 include:
-            * Subject matter of the skill
-            * Presence of child-oriented activities and incentives
-            * Type of language used in the skill
-            * Music and other audio content in the skill
-            * How the skill is described and marketed
-            * Intended audience for the skill
+    *  **このスキルは13際未満の子供を対象としたものですか？** このスキルのデータはあなたが用意したデータでカスタマイズされているので、13際未満の子供を対象にしているかもしれません。カスタマイズする前の状態の宇宙の豆知識スキルの場合は特定の年齢層をターゲットとしたものではないので、 **いいえ** を選択します。
+        * このスキルが13際未満の子供向けかどうかを判断すには、以下の要素を考慮してみてください。
+            * スキルのテーマ
+            * 子供向けの内容が含まれているか
+            * スキル内の言葉遣い
+            * スキル内で利用されている音楽やその他おオーディオコンテンツ
+            * スキルがどのように説明されマーケティングされるか
+            * スキルの想定利用者層
 
-            If you're not sure, please see the [FTC's COPPA Guidance and FAQ](https://www.ftc.gov/tips-advice/business-center/guidance/complying-coppa-frequently-asked-questions) for more information.
+12.  **輸出コンプライアンス** 全ての項目に同意できるか確認してください。同意する場合はボックスにチェックをつけてください。Amazonがスキルを配布するためには、ここでの同意が必要です。
 
-12.  **Export Compliance.** Be certain that you agree with all of the conditions.  If you do, make sure to check this box, as Amazon requires this permission to distribute your skill around the globe.  
+13.  **テストの手順** この欄は、あなたのスキルや、特殊だったり混乱しがちな機能を、認証チームに対して説明する機会となります。
 
-13. **Provide testing instructions.** Testing instructions give you an opportunity to explain your skill, and any special or possibly confusing features, to the certification team.  A value is required in this box.
+	* 今回はサンプリを使用しているので、テストの手順にその旨を記述してください。例:
 
-	* Since you are using our Sample, make sure to add a sentence to your Testing Instructions referencing the Sample you used. For example:
+    ```text
+    これはFactサンプルをもとに作成しました。
+    ```
 
-           ```
-           This was built using the the foodie Sample.
-           ```
+    これによりテストチームがスキルの構造を理解しテスト時間を節約することができます。
 
-           This will let the testing team understand what you're providing them, and should decrease the testing time required.    
+	**ノート:** 認証の詳細は [こちら](https://alexa.design/certification) を参照ください。
 
-	**Note:** More details on certification are [available here.](https://alexa.design/certification)
-
-14. If you feel that your skill is ready for certification, click the **Save and Continue** button at the bottom of the page.
+14. 準備ができましたら **保存して続行** ボタンをクリックします。
 
 
-15. **You're done with your submission!**  Here are a few things you might need to know:
+15. お疲れさまでした。これで **申請完了です!**
 
-    *  **Certification can take several days to complete.** Please be patient.  It takes time because we want to get it right.
+    *  **認定には数日かかります。** 審査が完了するまでしばらくお待ちください。
 
-    *  **Did something go wrong?** Our team of evangelists run [online office hours every Tuesday from 1-2pm Pacific Time](https://register.gotowebinar.com/rt/8924773651242797059).  They can help answer any questions you might have.
-
-    *  **Want the coolest t-shirt you've ever seen?** Every month, we create a brand-new Alexa Developer t-shirt or hoodie, and send them out to developers that published a skill that month.  [You can get yours here if you live in the US](https://developer.amazon.com/alexa-skills-kit/alexa-developer-skill-promotion?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=the-foodie-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_the-foodie-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs), [here for the UK](https://developer.amazon.com/en-gb/alexa-skills-kit/alexa-developer-skill-promotion?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=the-foodie-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_the-foodie-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs), and [here for Germany](https://developer.amazon.com/de-de/alexa-skills-kit/alexa-developer-skill-promotion?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=the-foodie-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_the-foodie-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs).
+    *  [スキル開発者への特典](https://developer.amazon.com/ja/alexa-skills-kit/alexa-developer-skill-promotion?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=fact-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_fact-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs) 
+    もございますので、ご参照ください。

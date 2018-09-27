@@ -1,48 +1,46 @@
-# Build An Alexa Meal Recommendation Skill
+# Alexa お食事ガイドスキルの作成
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-locked._TTH_.png)](./1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-on._TTH_.png)](./2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-off._TTH_.png)](./3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-off._TTH_.png)](./4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-off._TTH_.png)](./5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./6-publication.md)
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-locked.png)](./1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-on.png)](./2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-locked.png)](./3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-locked.pn)](./4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-locked.png)](./5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-locked.png)](./6-publication.md)
 
-## Setting Up A Lambda Function Using Amazon Web Services
+## Amazon Web Services を使い Lambda 関数を作成する
 
-In the [first step of this guide](./1-voice-user-interface.md), we built the Voice User Interface (VUI) for our Alexa skill.  On this page, we will be creating an AWS Lambda function using [Amazon Web Services](http://aws.amazon.com).  You can [read more about what a Lambda function is](http://aws.amazon.com/lambda), but for the purposes of this guide, what you need to know is that AWS Lambda is where our code lives.  When a user asks Alexa to use our skill, it is our AWS Lambda function that interprets the appropriate interaction, and provides the conversation back to the user.
+このガイドの[最初のステップ](1-voice-user-interface.md)で、Alexa スキル用の音声ユーザーインターフェース (VUI) を作成しました。このページでは、[Amazon Web Services](http://aws.amazon.com/jp) を使って Lambda 関数を作っていきます。詳細は [AWS Lambda](http://aws.amazon.com/jp/lambda) に記載されていますが、今回のスキルを作る上で知っておくべきことは、私たちのコードは AWS Lambda で実行されるということだけです。ユーザーが Alexa でスキルを呼び出したとき、適切な応答を返して会話を成立させるのが Lambda 関数です。
 
-1.  **Go to http://aws.amazon.com and sign in to the console.** If you don't already have an account, you will need to create one.  [If you don't have an AWS account, check out this quick walkthrough for setting it up](https://github.com/alexa/alexa-cookbook/tree/master/aws/set-up-aws.md).
+1.  **http://aws.amazon.com/jp** にサインインしてコンソールを開きます。まだアカウントを持っていない場合は、アカウントを作成する必要があります。[新規AWSアカウントの作成手順](../set-up-aws.md)を参考にしてください。
 
-    [![Developer Console](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-1-sign-in-to-the-console._TTH_.png)](https://console.aws.amazon.com/console/home)
+	[![デベロッパーコンソール](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/fact/2-1-sign-in-to-the-console.png)](https://console.aws.amazon.com/console/home)
 
-2.  **Click "Services" at the top of the screen, and type "Lambda" in the search box.**  You can also find Lambda in the list of services.  It is in the "Compute" section.
+2.  画面の上にあるメニューバーから **AWS サービス** を選び、検索窓に **Lambda** と入力します。サービス一覧からも選択することができます。Lambda は「コンピューティング」のセクションにあります。
 
-    [![Lambda](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-2-services-lambda._TTH_.png)](https://console.aws.amazon.com/lambda/home)
+	[![Lambda](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/fact/2-2-services-lambda.png)](https://console.aws.amazon.com/lambda/home)
 
-3.  **Check your AWS region.** AWS Lambda only works with the Alexa Skills Kit in these regions: US East (N. Virginia), US West (Oregon), Asia Pacific (Tokyo)  and EU (Ireland).  Make sure you choose the region closest to your customers.
-ß
-    ![Check Region](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-3-check-region._TTH_.png)
+3.  **AWS リージョン** を確認します。Alexa Skills Kit が利用できる Lambda のリージョンは2017年11月時点では、アジアパシフィック (東京)、米国東部 (バージニア北部)、米国西部 (オレゴン)、EU (アイルランド)の４つです。スキルのユーザーに最も近いリージョンを選択します。
 
-4.  **Click the orange "Create function" button.** It should be near the top of your screen.  (If you don't see this button, it is because you haven't created a Lambda function before.  Click the blue "Get Started" button near the center of your screen.)
+    ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/fact/2-3-check-region.png)
 
-    ![Create lambda function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-4-create-a-lambda-function._TTH_.png)
+4.  **関数の作成** ボタンをクリックします。画面の右上にあります。
 
-5.  There are three boxes labeled "Author from scratch", "Blueprints" and "Serverless Application Repository". **Click the radio button in the box titled  "Serverless Application Repository"**  We have created a repository as a shortcut to getting everything set up for your skill.
+    ![関数の作成](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/fact/2-4-create-a-lambda-function.png)
 
-6. **Search for the application repository named "alexa-skills-kit-nodejs-factskill".** You can find it using the provided search box. Once created, we will replace the `index.js` contents with the [code](https://github.com/alexa/skill-sample-nodejs-the-foodie/blob/master/lambda/custom/index.js) found in the `lambda/custom` folder. 
+5.  関数の作成ページは "一から作成"、"設計図"、"サーバーレスアプリケーションのレポジトリ"という３つのボックスがありますので、**サーバーレスアプリケーションのレポジトリ** を選択してください。簡便化のため、スキルを作成する上で必要となる全ての設定を行うアプリケーションを用意しています。Lambda 関数用の Alexa-sdk もあらかじめ用意されているので、自分でアップロードする必要はありません。
 
-7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as it's trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
+6. **検索フィールドに　`fact` と入力して 　`alexa-skills-kit-nodejs-factskill` という名前のアプリケーションを検索してください。** もしくは名前をすべて入力すれば、検索結果を絞り込むこともできます。 
 
-    <!-- <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/2-5-blueprint._TTH_.png" />  <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE, THIS ONE IS OUT OF DATE. -->
-8. **Click the deploy button** at the bottom of the page.
+7. **検索したアプリケーションをクリックしてください** このアプリケーションはLambda関数を作成し、Alexaスキルキットから呼び出しされる権限と、IAMロールの設定を行います。加えてGitHubから関連する一連のコードを取得し追加します。
 
-9. Wait for the status of all resources to change to **CREATE_COMPLETE**
+8. 必要でしたら Application name を変更して、**Deploy** ボタンをクリックしてください。
 
-10. Click the **Test App** button to go to the Lambda console.
+9. 画面右下に現れる３つの Resource の Status がすべて **CREATE_COMPLETE** になるまで待ちます。このとき、画面中央にも **Application successfully deployed** と表示されるはずです。
 
-11. **Open** the function that was **just created** by clicking on it.
+10. Lamda コンソールで作成された Lamda関数を開きます。通常、Resource 一覧の一番上に表示されているものをクリックしてください。
 
-12. If you want to **secure this Lambda function** follow the instructions found [here](https://github.com/alexa/alexa-cookbook/blob/master/aws/secure-lambda-function.md)
+11. Lamda関数のページに移行したら、ページをスクロールダウンして、**関数コード**　を参照してください。
 
-13. You should see the Amazon Resource Name (ARN) a unique identifier for this function in the top right corner of the page. **Copy the ARN value for this Lambda function** for use in the next section of the guide.
+12. index.js の内容を [lamda/custom/index.js](../lambda/custom/index.js) のコードで置き換えてください。完了したら画面右上の　**保存**　ボタンをクリックします。
 
-    ![Copy ARN](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/2-12-copy-ARN._TTH_.png)
-<!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE. -->
+13. このページの先頭のほうに、このLambda関数の Amazon Resource Name (ARN)が表示されています。(表示されていなければスクロールアップしてみてください) この値は次のステップで利用しますので、**arn: で始まる値をコピーしておいてください**
 
-[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_connect_vui_to_code._TTH_.png)](./3-connect-vui-to-code.md)
+    ![ARNのコピー](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/fact/2-12-copy-ARN._NEW_.png)
+
+[![次](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/general/buttons/button_next_connect_vui_to_code.png)](./3-connect-vui-to-code.md)

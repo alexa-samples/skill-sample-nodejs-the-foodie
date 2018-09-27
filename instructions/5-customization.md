@@ -1,37 +1,36 @@
-# Build An Alexa Meal Recommendation Skill
+# Alexa 豆知識スキルの作成
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-locked._TTH_.png)](./1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-locked._TTH_.png)](./2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-locked._TTH_.png)](./3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-locked._TTH_.png)](./4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-on._TTH_.png)](./5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./6-publication.md)
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-locked.png)](./1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-locked.png)](./2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-locked.png)](./3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-locked.pn)](./4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-on.png)](./5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-locked.png)](./6-publication.md)
 
-## Customize the Skill to be Yours
+## スキルのカスタマイズ
 
-At this point, you should have a working copy of our The Foodie skill.  In order to make it your own, you will need to customize it with data and responses that you create.  Here are the things you will need to change:
+ここまでで豆知識スキルの作業用コピーが用意できました。これをあなたのオリジナルのスキルにするために、事前に用意しておいたデータと応答文を使ってカスタマイズしましょう。変更すべき点は以下の通りです。
 
-1.  **New data.** You will need to provide a set of data for your topic.  We recommend a minimum of 25, but a total closer to 100 offers a better experience.
+1.  **新しいデータ** あなたが選んだトピックに関する豆知識を用意してください。最低でも25個、できれば100個近くの豆知識があればユーザーによりよい体験を提供できるでしょう。
 
-    1.  **Open a copy of index.js.** If you haven't already downloaded the code for this project, [you can find a copy of index.js here on GitHub](https://github.com/alexa/skill-sample-nodejs-the-foodie/blob/master/lambda/custom/index.js).  You can use a simple, lightweight code editor like [Atom](http://atom.io), [Sublime Text](http://sublimetext.com), or [VSCode](http://code.visualstudio.com), but you also have the option to edit the code directly in your Lambda function.
+    1.  **index.js** を開きます。まだコードをダウンロードしていない場合は、ここから[ダウンロード](../lambda/custom/index.js)できます。[Atom](http://atom.io)や[Sublime Text](http://sublimetext.com)、[VSCode](http://code.visualstudio.com)といったシンプルで軽量なエディタで修正することもできますが、ブラウザに表示された Lambda関数を直接編集することもできます。
 
-    2.  **Search for the comment "TODO: Replace this data with your own."**  This is the data for our skill.  You can see that it is a simple list of facts.
+    2. コードの中から **TODO: ここから下のデータを自分用にカスタマイズしてください。** というコメント文を探します。 これがスキルのデータ部分です。シンプルな豆知識のリストであることがわかるでしょう。
 
-    3.  **When you have replaced the data in index.js, copy the contents of your file to your Lambda function.**  This should be as simple as copying the text, and pasting it into the code box for your Lambda.
+    3.  index.js の内容を変更したら、**AWS マネジメントコンソール** に移動して Lambda 関数を開き、関数コードのところで index.js のデータを入れ替えます。テキストをコピー&ペーストするだけなのでとても簡単です。
 
-        ![Lambda Code Box](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/5-1-5-lambda-code-box._TTH_.png)
+       ![Lambda関数コード](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/fact/5-1-5-lambda-code-box.png)
 
-2.  **New sentences to respond to your users.** There are several sentences and responses that you will want to customize for your skill.
+2.  **ユーザーへの応答文**
 
-    1.  **Go back to your copy of [index.js](https://github.com/alexa/skill-sample-nodejs-the-foodie/blob/master/lambda/custom/index.js).**
+	応答文はあなたのスキル用にカスタマイズした方が良いでしょう。
 
-    2.  **Look for the comment "TODO: The items below this comment need your attention."** This is the beginning of the section where you need to customize several text strings for your skill.
+    1.  **[index.js](../lambda/custom/index.js)** のコピーに戻ります。
 
-    3.  **Continue through index.js until you reach the bottom of the file.**  This will ensure that you cover each of the values that you need to update.
+    2.  **TODO: このコメント行より下の項目に注目してください。** というコメント行を探してください。その下にスタマイズすべき部分がみつかります。
 
-3.  **New language.** If you are creating this skill for another language other than English, you will need to make sure Alexa's responses are also in that language.
+    3.  **index.js** をファイルの下の方まで読むと、どの部分を変更すべきかおよそ察しがつくでしょう。
 
-    *  For example, if you are creating your skill in German, every single response that Alexa makes has to be in German.  You can't use English responses or your skill will fail certification.
+3.  **新しい言語** もし、日本語以外の言語にスキルを提供したい場合は、Alexaの応答がそれらの言語でなされるようにしてください。
 
-4.  **Once you have made the updates listed on this page, you can click "Next" to move on to Publishing and Certification of your skill.**
+    *  例えば、ドイツ向きスキルを作る場合、全てのAlexaからの応答はドイツ語でなされる必要があります。もしドイツ向きのスキルの応答が日本語でなされるようなことがある場合、審査を通過することはできないでしょう。
 
-    ![Dev Portal Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/3-7-next-button._TTH_.png)
+4.  このページに記載した全てのアップデートが終わったら、下のボタンをクリックして、**スキルの公開**に進んでください
 
-
-[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_publication._TTH_.png)](6-publication.md)
+[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/general/buttons/button_next_publication.png)](./6-publication.md)
