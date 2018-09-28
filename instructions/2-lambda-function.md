@@ -40,7 +40,17 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
 
 12. If you want to **secure this Lambda function** follow the instructions found [here](https://github.com/alexa/alexa-cookbook/blob/master/aws/secure-lambda-function.md)
 
-13. You should see the Amazon Resource Name (ARN) a unique identifier for this function in the top right corner of the page. **Copy the ARN value for this Lambda function** for use in the next section of the guide.
+13. Additional permissions need to be added to the AWS IAM role being used by the skill since it is persisting data in Amazon DynamoDB.  Navigate to the [AWS IAM console](https://console.aws.amazon.com/iam/home#/roles).
+
+	> _Note: We are adding the full access policy here for convenience.  For a production skill, you should use a more targeted policy restricting access to just the required resources.  Refer to the [DynamoDB documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/access-control-overview.html) for more details._
+
+	1. Locate the role for your skill (by default, it is named ```ask-lambda-<your skill name>```). For example 'ask-lambda-the-foodie'. In browser reduce screen size to 75% to see all the AWS IAM role names.
+
+	1. Click on the role, then click **Attach Policy**.
+	1. Search for **AmazonDynamoDBFullAccess** and click the check box next to it.
+	1. Click **Attach Policy**.
+
+14. You should see the Amazon Resource Name (ARN) a unique identifier for this function in the top right corner of the page. **Copy the ARN value for this Lambda function** for use in the next section of the guide.
 
     ![Copy ARN](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/2-12-copy-ARN._TTH_.png)
 <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE. -->
