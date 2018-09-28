@@ -1,4 +1,4 @@
-# Alexa 豆知識スキルの作成
+# Alexa お食事ガイドスキルの作成
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
 ## ASK CLIを利用したセットアップ
@@ -23,7 +23,8 @@
 2. レポジトリを **clone** してください。
 
 	```bash
-	$ git clone https://github.com/alexa/skill-sample-nodejs-fact/
+	$ git clone https://github.com/alexa/skill-sample-nodejs-the-foodie.git
+	$ git checkout ja-JP
 	```
 
 3. 初回のご利用の場合、レポジトリ内で `ask init` コマンドを実行することで、 [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=fact-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_fact-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs) を初期化してください。 
@@ -94,3 +95,4 @@ ASK CLI はスキルとLambda関数を作成します。このLambda関数はデ
 	**呼び出し名** やそれぞれのインテントに対する **サンプルフレーズ** などを編子してみてください。変更はサポートを予定している、それぞれの地域・言語毎に行う必要があります。
 
 4. 変更をしたときにはスキルとLambda関数を再デプロイすることをお忘れなく。
+

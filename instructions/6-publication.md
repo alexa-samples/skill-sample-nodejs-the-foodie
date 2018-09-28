@@ -1,4 +1,4 @@
-# Alexa 豆知識スキルの作成
+# Alexa お食事ガイドスキルの作成
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
 [![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-locked.png)](./1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-locked.png)](./2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-locked.png)](./3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-locked.pn)](./4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-locked.png)](./5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-on.png)](./6-publication.md)
@@ -69,7 +69,7 @@
     *  **このスキルはユーザーの個人情報を収集しますか？** これについても今回の宇宙の豆知識スキルでは、 **いいえ** を選択します。 もし、ユーザーの個人情報、例えば氏名やメールアドレス、電話番号等を収集しているのであれば、この質問に**はい**と答えてください。
         *  この質問に **はい**と答えた場合、プライバシーポリシーへのリンクを提供する必要があります。
 
-    *  **このスキルは13際未満の子供を対象としたものですか？** このスキルのデータはあなたが用意したデータでカスタマイズされているので、13際未満の子供を対象にしているかもしれません。カスタマイズする前の状態の宇宙の豆知識スキルの場合は特定の年齢層をターゲットとしたものではないので、 **いいえ** を選択します。
+    *  **このスキルは13際未満の子供を対象としたものですか？** このスキルのデータはあなたが用意したデータでカスタマイズされているので、13際未満の子供（日本では16才未満が子供とみなされます）を対象にしているかもしれません。カスタマイズする前の状態の宇宙の豆知識スキルの場合は特定の年齢層をターゲットとしたものではないので、 **いいえ** を選択します。
         * このスキルが13際未満の子供向けかどうかを判断すには、以下の要素を考慮してみてください。
             * スキルのテーマ
             * 子供向けの内容が含まれているか
