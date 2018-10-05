@@ -3,10 +3,11 @@
 
 ## Overview
 
-In this workshop you will create a skill called The Foodie that recommends a meal. When launched, this Alexa Skill will prompt the user for the
-information it needs to recommend a meal. Once all of the required information
+In this workshop you will create a skill called The Foodie that recommends a meal. When launched, this Alexa Skill will prompt the user for the information it needs to recommend a meal. Once all of the required information
 is collected, it will send the data to an external web service which processes
 the data and returns meal recommendations. The user can decide if they want to cook, eat our or in.
+
+To learn more about this skill and about conversational design, visit the [Designing for Conversation](https://alexa.design/4conversation) companion course.
 
 Through this workshop, you'll learn how to use advanced Alexa Skills Kit
 features to create and configure an Alexa Skill and AWS Lambda. The features you'll
