@@ -1,0 +1,630 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "the foodie",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "RecommendationIntent",
+          "slots": [
+            {
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME"
+            },
+            {
+              "name": "cuisine",
+              "type": "cuisineType"
+            },
+            {
+              "name": "allergies",
+              "type": "allergyType",
+              "samples": [
+                "I'm allergic to {allergies} and I'm {diet}",
+                "I'm allergic to {allergies}",
+                "{allergies} and I'm {diet}"
+              ]
+            },
+            {
+              "name": "diet",
+              "type": "dietType"
+            },
+            {
+              "name": "meal",
+              "type": "AMAZON.Food",
+              "samples": [
+                "{meal} sounds great",
+                "{meal} sounds good",
+                "I want {meal}"
+              ]
+            },
+            {
+              "name": "deliveryOption",
+              "type": "deliveryOptionType",
+              "samples": [
+                "I want to eat {deliveryOption}",
+                "I'll try my hand at {deliveryOption}",
+                "try my hand at {deliveryOption}",
+                "I want to a {deliveryOption}",
+                "I want to get {deliveryOption}"
+              ]
+            },
+            {
+              "name": "timeOfDay",
+              "type": "timeOfDayType"
+            },
+            {
+              "name": "portionSize",
+              "type": "portionSizeType"
+            }
+          ],
+          "samples": [
+            "{name}",
+            "my name is {name}",
+            "I'm hangry",
+            "I'm on the {diet}",
+            "I'm allergic to {allergies} and I'm {diet}",
+            "I'm allergic to {allergies}",
+            "{cuisine} sounds great",
+            "It's {timeOfDay}",
+            "I want to eat {deliveryOption}",
+            "I want {meal}",
+            "I want a {meal}",
+            "I want a {meal} for {timeOfDay}",
+            "I want to eat {cuisine} for {timeOfDay}",
+            "I want something {cuisine}",
+            "it's {timeOfDay} time",
+            "I'm hungry"
+          ]
+        },
+        {
+          "name": "CaptureAddressIntent",
+          "slots": [
+            {
+              "name": "city",
+              "type": "AMAZON.US_CITY",
+              "samples": [
+                "{city} {state}"
+              ]
+            },
+            {
+              "name": "state",
+              "type": "AMAZON.US_STATE",
+              "samples": [
+                "{city} {state}"
+              ]
+            },
+            {
+              "name": "zip",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{city} {state}",
+                "{city}",
+                "{state}"
+              ]
+            }
+          ],
+          "samples": [
+            "register my address",
+            "{city} {state}",
+            "{city}",
+            "my zip code is {zip}",
+            "I live in {city} {state}"
+          ]
+        },
+        {
+          "name": "ExplainPortionSizeIntent",
+          "slots": [
+            {
+              "name": "portion",
+              "type": "portionSizeType"
+            }
+          ],
+          "samples": [
+            "how many calories is a {portion}",
+            "how many calories is a {portion} portion"
+          ]
+        },
+        {
+          "name": "LookupRestaurantIntent",
+          "slots": [
+            {
+              "name": "restuarant",
+              "type": "restaurantType"
+            }
+          ],
+          "samples": [
+            "I want to go to {restuarant}",
+            "How about {restuarant}",
+            "{restuarant}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "breakfast"
+              }
+            },
+            {
+              "name": {
+                "value": "brunch"
+              }
+            },
+            {
+              "name": {
+                "value": "lunch"
+              }
+            },
+            {
+              "name": {
+                "value": "dinner"
+              }
+            },
+            {
+              "name": {
+                "value": "midnight"
+              }
+            }
+          ],
+          "name": "timeOfDayType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "mexican"
+              }
+            },
+            {
+              "name": {
+                "value": "japanese"
+              }
+            },
+            {
+              "name": {
+                "value": "spanish",
+                "synonyms": [
+                  "savory",
+                  "spicy"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "korean",
+                "synonyms": [
+                  "savory",
+                  "spicy"
+                ]
+              }
+            }
+          ],
+          "name": "cuisineType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "none",
+                "synonyms": [
+                  "i have none",
+                  "i don't have any",
+                  "nope"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "soy"
+              }
+            },
+            {
+              "name": {
+                "value": "wheat"
+              }
+            },
+            {
+              "name": {
+                "value": "nuts"
+              }
+            },
+            {
+              "name": {
+                "value": "shellfish"
+              }
+            },
+            {
+              "name": {
+                "value": "fish"
+              }
+            },
+            {
+              "name": {
+                "value": "peanuts"
+              }
+            },
+            {
+              "name": {
+                "value": "eggs"
+              }
+            },
+            {
+              "name": {
+                "value": "milk"
+              }
+            }
+          ],
+          "name": "allergyType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "gluten-free"
+              }
+            },
+            {
+              "name": {
+                "value": "detox",
+                "synonyms": [
+                  "master cleanse",
+                  "juice fasting"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "low carbohydrate",
+                "synonyms": [
+                  "ideal protein",
+                  "Atkins diet",
+                  "low carb"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "low calorie",
+                "synonyms": [
+                  "nutrisystem",
+                  "cookie diet",
+                  "body for life",
+                  "intermittent fasting"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "ketogenic",
+                "synonyms": [
+                  "keto"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "pescatarian"
+              }
+            },
+            {
+              "name": {
+                "value": "vegan"
+              }
+            },
+            {
+              "name": {
+                "value": "vegetarian"
+              }
+            }
+          ],
+          "name": "dietType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "Blue Mill Burgers"
+              }
+            },
+            {
+              "name": {
+                "value": "Mick's"
+              }
+            },
+            {
+              "name": {
+                "value": "Fred Frobin"
+              }
+            },
+            {
+              "name": {
+                "value": "One Pot"
+              }
+            },
+            {
+              "name": {
+                "value": "Korean Bamboo"
+              }
+            }
+          ],
+          "name": "restaurantType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "Daegu Jorim"
+              }
+            },
+            {
+              "name": {
+                "value": "Mae Un Tang"
+              }
+            },
+            {
+              "name": {
+                "value": "Domi Maeuntang"
+              }
+            }
+          ],
+          "name": "mealType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "restaurant",
+                "synonyms": [
+                  "out",
+                  "out of the office"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "delivery",
+                "synonyms": [
+                  "in",
+                  "take out",
+                  "order take out",
+                  "order in"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "make",
+                "synonyms": [
+                  "cook"
+                ]
+              }
+            }
+          ],
+          "name": "deliveryOptionType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "large"
+              }
+            },
+            {
+              "name": {
+                "value": "medium"
+              }
+            },
+            {
+              "name": {
+                "value": "small"
+              }
+            }
+          ],
+          "name": "portionSizeType"
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "CaptureAddressIntent",
+          "confirmationRequired": false,
+          "slots": [
+            {
+              "name": "city",
+              "type": "AMAZON.US_CITY",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.497897651534.178657323991"
+              }
+            },
+            {
+              "name": "state",
+              "type": "AMAZON.US_STATE",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.497897651534.366407409919"
+              }
+            },
+            {
+              "name": "zip",
+              "type": "AMAZON.NUMBER",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.497897651534.1026488067712"
+              }
+            }
+          ]
+        },
+        {
+          "name": "RecommendationIntent",
+          "confirmationRequired": false,
+          "slots": [
+            {
+              "name": "name",
+              "type": "AMAZON.US_FIRST_NAME",
+              "elicitationRequired": false,
+              "confirmationRequired": false
+            },
+            {
+              "name": "cuisine",
+              "type": "cuisineType",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.618525487752.1187001966630"
+              }
+            },
+            {
+              "name": "allergies",
+              "type": "allergyType",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.618525487752.47288599882"
+              }
+            },
+            {
+              "name": "diet",
+              "type": "dietType",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.618525487752.1437733150643"
+              }
+            },
+            {
+              "name": "meal",
+              "type": "AMAZON.Food",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.571225698000.1192442834145"
+              }
+            },
+            {
+              "name": "deliveryOption",
+              "type": "deliveryOptionType",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.571225698000.292982357814"
+              }
+            },
+            {
+              "name": "timeOfDay",
+              "type": "timeOfDayType",
+              "elicitationRequired": false,
+              "confirmationRequired": false
+            },
+            {
+              "name": "portionSize",
+              "type": "portionSizeType",
+              "elicitationRequired": false,
+              "confirmationRequired": false
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.497897651534.1026488067712",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What is your zip code?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.497897651534.366407409919",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What state are you in?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.497897651534.178657323991",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What city are you in?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.618525487752.47288599882",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Tell me about your allergies. You can say, peanuts or shellfish."
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.618525487752.1350405322907",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What time of day is it?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.618525487752.1437733150643",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Do you have any dietary restrictions. You can say vegetarian, or pescatarian."
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.618525487752.1187001966630",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "I recommend cuisines based on flavor profiles. You can say things like spicy, savory, greasy, and fresh. What sounds good?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.571225698000.1192442834145",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What would you like to eat?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.571225698000.292982357814",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Which would you like, to eat out, order delivery, or cook?"
+          }
+        ]
+      }
+    ]
+  }
+}

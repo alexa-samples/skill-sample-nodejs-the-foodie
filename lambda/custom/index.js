@@ -464,6 +464,7 @@ const RecommendationIntentStartedRequestInterceptor = {
         // handle function
         const updatedIntent = handlerInput.requestEnvelope.request.intent;
 
+        updatedIntent.slots.name.value = profile.name || undefined;
         updatedIntent.slots.diet.value = profile.diet || undefined;
         updatedIntent.slots.allergies.value = profile.allergies || undefined;
 
