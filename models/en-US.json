@@ -139,14 +139,14 @@
           "name": "LookupRestaurantIntent",
           "slots": [
             {
-              "name": "restuarant",
+              "name": "restaurant",
               "type": "restaurantType"
             }
           ],
           "samples": [
-            "I want to go to {restuarant}",
-            "How about {restuarant}",
-            "{restuarant}"
+            "I want to go to {restaurant}",
+            "How about {restaurant}",
+            "{restaurant}"
           ]
         }
       ],
