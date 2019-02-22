@@ -21,7 +21,8 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": "lambda/custom"
+          "sourceDir": "lambda/custom",
+          "uri": "ask-custom-skill-sample-nodejs-the-foodie-default"
         },
         "interfaces": []
       }
